@@ -16,20 +16,18 @@ Randomly assign buyer and seller roles. Ensure that items keep being sold throug
 
 # How to run?  
 1. Switch to the root directory of this project (Ex. cd /mapreduce-Cih-Che-Fang) and confirm the path contains no "blank"  
-2. Perform run_test.bat on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system
+2. Perform run_test.bat on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
 3. See the testing result on console, it will tell you if the output is equal to the Spark output. Logs like:  
 
-Output info to loc:info-id-0
-ServerId:0 start!!
-Reply 0 1 0 0
-ServerID:0 receive msg:Reply 0 1 0 0 with path:0
-Output info to loc:info-id-0
-BuyerID:0 bought fish from 1
-BuyerID:0 start to buy boars
-Output info to loc:info-id-0
-Output info to loc:info-id-0
-Output info to loc:info-id-0
-Output info to loc:info-id-0
+Output info to loc:info-id-0  
+ServerId:0 start!!  
+Reply 0 1 0 0  
+ServerID:0 receive msg:Reply 0 1 0 0 with path:0  
+Output info to loc:info-id-0  
+BuyerID:0 bought fish from 1  
+BuyerID:0 start to buy boars  
+Output info to loc:info-id-0  
+
 
 
 # Directory/Files Description
