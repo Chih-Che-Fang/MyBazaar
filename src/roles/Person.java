@@ -17,6 +17,7 @@ import utils.Server;
 public class Person implements LookUp, Reply, Buy {
 
 	static final String[] productList = {"fish", "salt", "boars"};
+	static final String[] roleList = {"b", "s"};
 	public String type = ""; //1:buyer 0:seller
 	public String id = "";
 	public String product = "";
@@ -32,13 +33,15 @@ public class Person implements LookUp, Reply, Buy {
 		this.addresLookUp = new AddressLookUp("config.txt");
 		this.count = count;
 		this.id = id;
-		this.product = product;
-		this.type = type;
 		this.r = new Random();
+		this.product = product.equals("na")? productList[r.nextInt(productList.length)] : product;
+		this.type = product.equals("na")? roleList[r.nextInt(roleList.length)] : type;
+		
 		
 		for(String nbr : neighbors) {
 			this.clients.put(nbr, new Client(this.addresLookUp.get(nbr)));
-		}	
+		}
+		this.dump();
 	}
 	
 	//Message handlers, will call implemented function interfaces: lookup, buy, or reply

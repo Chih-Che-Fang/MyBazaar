@@ -22,6 +22,7 @@ public class Seller extends Person {
 
 	@Override
 	public boolean reply(String buyerID, String sellerID) {
+		System.out.println(String.format("SellerID:%s reply BuyerID:%s", sellerID, buyerID));
 		return false;
 	}
 
