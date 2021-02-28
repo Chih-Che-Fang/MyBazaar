@@ -76,7 +76,7 @@ public class Person implements LookUp, Reply, Buy {
 		} else {
 		
 			int receiverId = msgPath.charAt(msgPath.length() - 2) - '0';
-			Client c = clients.get(receiverId);
+			Client c = clients.get(Integer.toString(receiverId));
 			Integer ret = c.execute("MessageHandler.handleMsg", 
 					new Object[] {String.format("%s %s %s %s %s", "Reply", buyerID, sellerID, msgPath.substring(0, msgPath.length() - 1), receiverId)});
 		}
