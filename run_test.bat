@@ -22,11 +22,11 @@ REM REM run test case 2
  taskkill /F /IM java.exe
 
 REM run test case 3
-REM echo na 0 na 1 1 > info-id-0
-REM echo na 1 na 0 1 > info-id-1
-REM start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
-REM start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
-REM TIMEOUT 10
-REM taskkill /F /IM java.exe
+ echo na 0 na 1 1 > info-id-0
+ echo na 1 na 0 1 > info-id-1
+ start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
+ start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
+ TIMEOUT 10
+ taskkill /F /IM java.exe
 
 pause
