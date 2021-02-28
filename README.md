@@ -8,10 +8,10 @@
 
 #Enviornment: Windows + Java SDK 8 Installed  
 #Applications:
-[Milestone1]
-Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.
-Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.
-Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.
+[Milestone1]  
+Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
+Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
+Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.  
 
 
 # How to run?  
