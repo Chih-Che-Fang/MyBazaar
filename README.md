@@ -7,7 +7,7 @@
 *I Aggree to share this source code with my group members
 
 #Enviornment: Windows + Java SDK 8 Installed  
-#Applications:
+#Applications:  
 [Milestone1]  
 Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
 Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
