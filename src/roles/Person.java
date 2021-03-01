@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import action.Buy;
 import action.LookUp;
@@ -21,17 +22,40 @@ public class Person implements LookUp, Reply, Buy {
 	public String type = ""; //1:buyer 0:seller
 	public String id = "";
 	public String product = "";
-	public int count = 0;
+	private final AtomicInteger count;
+
 	Random r;
 
 	public HashMap<String, Client> clients = new HashMap<>();
 	public AddressLookUp addressLookUp;
 
-	
+	int getItemNum() {
+		return count.get();
+	}
+
+	void decrementItemNum() {
+		while(true) {
+			int oldNum = getItemNum();
+			int newNum = oldNum - 1;
+			if(count.compareAndSet(oldNum, newNum)) {
+				return;
+			}
+		}
+	}
+
+	void resetItemNum() {
+		while(true) {
+			if(count.compareAndSet(0, Seller.m)) {
+				return;
+			}
+		}
+	}
+
+
 	public Person(String type, String id, String product, String[] neighbors, int count) { /*s 1 fish 0 0*/
 		
 		this.addressLookUp = new AddressLookUp("config.txt");
-		this.count = count;
+		this.count = new AtomicInteger(count);
 		this.id = id;
 		this.r = new Random();
 		this.product = product.equals("na")? productList[r.nextInt(productList.length)] : product;

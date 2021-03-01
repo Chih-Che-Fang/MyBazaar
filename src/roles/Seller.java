@@ -1,7 +1,5 @@
 package roles;
 
-import utils.Client;
-
 public class Seller extends Person {
 
 	static final int m = 1;
@@ -9,12 +7,12 @@ public class Seller extends Person {
 	public Seller(String type, String id, String product, String[] neighbors, int count) {
 		super(type, id, product, neighbors, count);
 	}
-	
-	
+
 	@Override
 	public void buy(String sellerID) {
-		if(--count == 0) {
-			count = m;
+		decrementItemNum();
+		if(getItemNum() == 0) {
+			resetItemNum();
 			product = productList[r.nextInt(productList.length)];
 			System.out.println(String.format("SellerID:%s start to sell %s", id, product));
 		}
