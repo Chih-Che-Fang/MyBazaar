@@ -22,15 +22,15 @@ public class Person implements LookUp, Reply, Buy {
 	public String id = "";
 	public String product = "";
 	public int count = 0;
-	Random r = null;
+	Random r;
 
-	public HashMap<String, Client> clients = new HashMap<String, Client>();
-	public AddressLookUp addresLookUp = null;
+	public HashMap<String, Client> clients = new HashMap<>();
+	public AddressLookUp addressLookUp;
 
 	
 	public Person(String type, String id, String product, String[] neighbors, int count) { /*s 1 fish 0 0*/
 		
-		this.addresLookUp = new AddressLookUp("config.txt");
+		this.addressLookUp = new AddressLookUp("config.txt");
 		this.count = count;
 		this.id = id;
 		this.r = new Random();
@@ -39,7 +39,7 @@ public class Person implements LookUp, Reply, Buy {
 		
 		
 		for(String nbr : neighbors) {
-			this.clients.put(nbr, new Client(this.addresLookUp.get(nbr)));
+			this.clients.put(nbr, new Client(this.addressLookUp.get(nbr)));
 		}
 		this.dump();
 	}
@@ -73,7 +73,7 @@ public class Person implements LookUp, Reply, Buy {
 		
 		
 		if(this.reply(buyerID, sellerID)) {
-			Client c = new Client(addresLookUp.get(sellerID));
+			Client c = new Client(addressLookUp.get(sellerID));
 			Integer ret = c.execute("MessageHandler.handleMsg", 
 					new Object[] {String.format("%s %s %s %s", "Buy", sellerID, msgPath, sellerID)});
 		} else {
@@ -171,12 +171,12 @@ public class Person implements LookUp, Reply, Buy {
 		if(p.type.equals("b")){
 			
 			while(true) {
-				
+
 				//Send lookup message to neighbors
 				for(String nbrID : p.clients.keySet()) {
 					try {
 						Client c = p.clients.get(nbrID);
-						int maxHop = p.addresLookUp.addres.size() - 1;
+						int maxHop = p.addressLookUp.address.size() - 1;
 						Integer ret = c.execute("MessageHandler.handleMsg", 
 									new Object[] {String.format("%s %s %s %s %s", "LookUp", p.product, maxHop, id, nbrID)});
 					} catch (Exception e) {
