@@ -17,7 +17,7 @@ Randomly assign buyer and seller roles. Ensure that items keep being sold throug
 # How to run?  
 1. Switch to the root directory of this project (Ex. cd /MyBazaar) and confirm the path contains no "blank"  
 2. Perform run_test.bat on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
-3. See the testing result on console, it will tell you if the output is equal to the Spark output. Logs like:  
+3. See the testing result on console, it will tell you if the buyer bought the products or not. For every test case, it will jump two console windows, one represent buyer process and another represent seller process, they will individually print logs like:  
 
 Output info to loc:info-id-0  
 ServerId:0 start!!  
