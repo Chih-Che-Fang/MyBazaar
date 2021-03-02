@@ -33,8 +33,8 @@ Output info to loc:info-id-0
 # Directory/Files Description
 -	Bin: Complied JAVA class
 -	Src: Project source code
--	Run_test.bat: testing script
+-	Run_test.bat: testing script (windows)
+-	run.sh: testing script (linux)
 -	libs: All dependency libs
--	Local_refresh: For local debugging use
 -	Docs: Design documents
 -	Read.md: Readme file
