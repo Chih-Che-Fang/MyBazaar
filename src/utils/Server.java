@@ -24,7 +24,7 @@ import roles.Person;
  
           try {
         	  this.id = id;
-              webServer = new WebServer(port + Integer.valueOf(id));
+              webServer = new WebServer(port + Integer.parseInt(id));
               
               XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
             
@@ -91,6 +91,6 @@ import roles.Person;
 	public void start() {
 		t = new Thread (this);
 		t.start ();
-		System.out.println(String.format("ServerId:%s start!!", id));
+		System.out.printf("ServerId:%s start!!%n", id);
 	}
   }

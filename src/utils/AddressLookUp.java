@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AddressLookUp {
 	
-	public List<String> addres = new ArrayList<String>();
+	public List<String> address = new ArrayList<>();
 	
 	public AddressLookUp(String config) {
 
@@ -16,7 +16,7 @@ public class AddressLookUp {
 			BufferedReader reader = new BufferedReader(new FileReader(config));
 			String line = reader.readLine();
 			while (line != null) {
-				addres.add(line.split(",")[1]);
+				address.add(line.split(",")[1]);
 				//System.out.println(line);
 				line = reader.readLine();
 			}
@@ -27,7 +27,7 @@ public class AddressLookUp {
 	}
 	
 	public String get(String id) {
-		return addres.get(Integer.valueOf(id));
+		return address.get(Integer.parseInt(id));
 	}
 
 }

@@ -1,0 +1,9 @@
+.DS_Store
+.idea/
+src/.DS_Store
+bin/
+*.iml
+.classpath
+info-id-0
+info-id-1
+bin/
