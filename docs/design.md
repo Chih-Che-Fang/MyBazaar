@@ -26,14 +26,23 @@ do reply or lookup and relay messages, so we defined another 5 classes included 
 AddressLookUp: read global hosts IP/Port configuration in config.txt.
 Client: xml-rpc client.
 MessageHandler: xml-rpc reciver handler. (included in the Server class)
-HandlerThread: used to handel multithread for MessageHandler.
+HandlerThread: used to handle multithread for MessageHandler.
 Server: xml-rpc server implementation also to register MessageHandler. 
 ```
 
+
+The overall diagram shows below:
 ![UML diagram](./UML.png "UML")
 
 
 # Design tradeoffs
 
+# How to run it
+
+See [README.md #How to run?](https://github.com/Chih-Che-Fang/MyBazaar#how-to-run "How to run")
 
 # Possible improvements and extensions
+
+1. We assume the id of hosts has to be ascending sequence, otherwise it will cause errors.
+2. The MaxHopCount currently is hardcoded, we could customize this number in the future for buyers.
+3. We are using thread per request model currently we could be optimized by using thread pool or even coroutine.
