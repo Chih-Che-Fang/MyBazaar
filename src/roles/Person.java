@@ -38,8 +38,6 @@ public class Person implements LookUp, Reply, Buy {
 	public AddressLookUp addressLookUp;
 	public Logger logger = null;
 
-	public static int total = 0;
-	
 	int getItemNum() {
 		return count.get();
 	}

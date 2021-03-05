@@ -21,7 +21,6 @@ import roles.Person;
       protected WebServer webServer;
   	  protected Thread t;//Server thread
   	  public static ReentrantLock lock = new ReentrantLock();
-  	  public static int total = 0;
   	  
       public Server(String id) {
  
