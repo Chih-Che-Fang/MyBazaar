@@ -1,13 +1,18 @@
 package utils;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import roles.Person;
 
 public class HandlerThread implements Runnable {
 	String msg = "";
+	ReentrantLock lock;
+	
 	protected Thread t;//Message Handler thread
 	 
-	public HandlerThread(String msg) {
+	public HandlerThread(String msg, ReentrantLock lock) {
 		this.msg = msg;
+		this.lock = lock;
 	}
 	
 	@Override
@@ -32,11 +37,12 @@ public class HandlerThread implements Runnable {
 				p.handleReplyMsg(msgTokens[1], msgTokens[2], msgPath);
 				break;
 			case "Buy":
+				lock.lock();
 				p.handleBuyMsg(msgTokens[1], msgPath);
+				p.dump();
+				lock.unlock();
 				break;
 		}
-		
-		p.dump();
 	}
 	
 	/* Function:

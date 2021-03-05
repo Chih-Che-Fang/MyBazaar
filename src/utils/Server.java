@@ -4,6 +4,7 @@ package utils;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.common.TypeConverterFactoryImpl;
@@ -19,6 +20,8 @@ import roles.Person;
       protected String id = "";
       protected WebServer webServer;
   	  protected Thread t;//Server thread
+  	  public static ReentrantLock lock = new ReentrantLock();
+  	  public static int total = 0;
   	  
       public Server(String id) {
  

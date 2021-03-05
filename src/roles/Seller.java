@@ -4,23 +4,23 @@ public class Seller extends Person {
 
 	static final int m = 1;
 	
-	public Seller(String type, String id, String product, String[] neighbors, int count) {
-		super(type, id, product, neighbors, count);
+	public Seller(String type, String id, String product, String[] neighbors, int count, String output) {
+		super(type, id, product, neighbors, count, output);
 	}
 
 	@Override
-	public void buy(String sellerID) {
-		decrementItemNum();
-		if(getItemNum() == 0) {
+	public boolean buy(String sellerID) {
+		if(decrementItemNum() && getItemNum() == 0) {
 			resetItemNum();
 			product = productList[r.nextInt(productList.length)];
-			System.out.println(String.format("SellerID:%s start to sell %s", id, product));
+			logger.log(String.format("SellerID:%s start to sell %s", id, product));
+			return true;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean reply(String buyerID, String sellerID) {
-		System.out.println(String.format("SellerID:%s reply BuyerID:%s", sellerID, buyerID));
 		return false;
 	}
 

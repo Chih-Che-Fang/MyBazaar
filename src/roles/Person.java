@@ -1,9 +1,16 @@
 package roles;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.nio.file.OpenOption;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -13,6 +20,7 @@ import action.LookUp;
 import action.Reply;
 import utils.AddressLookUp;
 import utils.Client;
+import utils.Logger;
 import utils.Server;
 
 public class Person implements LookUp, Reply, Buy {
@@ -24,21 +32,26 @@ public class Person implements LookUp, Reply, Buy {
 	public String product = "";
 	private final AtomicInteger count;
 
-	Random r;
+	public Random r;
 
 	public HashMap<String, Client> clients = new HashMap<>();
 	public AddressLookUp addressLookUp;
+	public Logger logger = null;
 
+	public static int total = 0;
+	
 	int getItemNum() {
 		return count.get();
 	}
 
-	void decrementItemNum() {
+	boolean decrementItemNum() {
+
 		while(true) {
 			int oldNum = getItemNum();
 			int newNum = oldNum - 1;
+			if(oldNum == 0) return false;
 			if(count.compareAndSet(oldNum, newNum)) {
-				return;
+				return true;
 			}
 		}
 	}
@@ -52,7 +65,7 @@ public class Person implements LookUp, Reply, Buy {
 	}
 
 
-	public Person(String type, String id, String product, String[] neighbors, int count) { /*s 1 fish 0 0*/
+	public Person(String type, String id, String product, String[] neighbors, int count, String output) { /*s 1 fish 0 0*/
 		
 		this.addressLookUp = new AddressLookUp("config.txt");
 		this.count = new AtomicInteger(count);
@@ -60,12 +73,12 @@ public class Person implements LookUp, Reply, Buy {
 		this.r = new Random();
 		this.product = product.equals("na")? productList[r.nextInt(productList.length)] : product;
 		this.type = product.equals("na")? roleList[r.nextInt(roleList.length)] : type;
-		
+		this.logger = new Logger(output);
 		
 		for(String nbr : neighbors) {
 			this.clients.put(nbr, new Client(this.addressLookUp.get(nbr)));
 		}
-		this.dump();
+		//this.dump();
 	}
 	
 	//Message handlers, will call implemented function interfaces: lookup, buy, or reply
@@ -99,7 +112,7 @@ public class Person implements LookUp, Reply, Buy {
 		if(this.reply(buyerID, sellerID)) {
 			Client c = new Client(addressLookUp.get(sellerID));
 			Integer ret = c.execute("MessageHandler.handleMsg", 
-					new Object[] {String.format("%s %s %s %s", "Buy", sellerID, msgPath, sellerID)});
+					new Object[] {String.format("%s %s %s %s", "Buy", sellerID, msgPath + product, sellerID)});
 		} else {
 		
 			int receiverId = msgPath.charAt(msgPath.length() - 2) - '0';
@@ -111,7 +124,12 @@ public class Person implements LookUp, Reply, Buy {
 	}
 	
 	public void handleBuyMsg(String sellerId, String msgPath) {
-		buy(sellerId);
+		if(msgPath.substring(1).equals(product) && buy(sellerId)) {
+			String senderID = msgPath.charAt(0) + "";
+			Client c = new Client(addressLookUp.get(senderID));
+			Integer ret = c.execute("MessageHandler.handleMsg", 
+					new Object[] {String.format("%s %s %s %s", "Buy", sellerId, msgPath, senderID)});
+		}
 	}
 	
 	//Return neighbors of the peer
@@ -133,28 +151,10 @@ public class Person implements LookUp, Reply, Buy {
 			String outFile = String.format("info-id-%s", id);
 			System.out.println("Output info to loc:" + outFile);
 			fstream =  new FileWriter(outFile, false);
-			
+			String winfo = String.format("%s %s %s %s %s %s", type, id, product, getNeighbors(), count, logger.output);
+			System.out.println("Write:"+winfo);
 			out = new BufferedWriter(fstream);
-			out.write(String.format("%s %s %s %s %s", type, id, product, getNeighbors(), count));
-			out.newLine();
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//Dump peer information to disk
-	public static void dump(String[] args) {
-		FileWriter fstream;
-		BufferedWriter out;
- 		
-		try {
-			String outFile = String.format("info-id-%s", args[1]);
-			System.out.println("Output info to loc:" + outFile);
-			fstream =  new FileWriter(outFile, false);
-			
-			out = new BufferedWriter(fstream);
-			out.write(String.format("%s %s %s %s %s", args[0], args[1], args[2], args[3], args[4]));
+			out.write(String.format("%s %s %s %s %s %s", type, id, product, getNeighbors(), count, logger.output));
 			out.newLine();
 			out.close();
 		} catch (IOException e) {
@@ -163,25 +163,48 @@ public class Person implements LookUp, Reply, Buy {
 	}
 	
 	public static Person accessPerson(String id) {
+		
 		String personFile = String.format("info-id-%s", id);
-		String[] personInfo = {"", "", "", "", "", ""};
+		String[] personInfo = new String[6];
+		FileLock lock = null;
+		FileOutputStream fos = null;
 		
 		//Get person information
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(personFile));
+
+			FileInputStream fInputStream = new FileInputStream(personFile);
+			FileChannel inputChannel = fInputStream.getChannel();
+
+			//BufferedReader reader = new BufferedReader(new FileReader(personFile));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(fInputStream));
 			String line = reader.readLine();
+			
 			personInfo = line.split("\\s+");
+
 			reader.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		//Access person information
 		String type = personInfo[0];
-		return (type.equals("b"))? 
-				new Buyer(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4])) :
-					new Seller(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4]));
+		Person p = null;
+		switch(type) {
+		case "b":
+			p = new Buyer(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4]), personInfo[5]);
+			break;
+		case "s":
+			p = new Seller(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4]), personInfo[5]);
+			break;
+		case "n":
+			p = new NoRole(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4]), personInfo[5]);
+			break;
+		}
+
+		return p;
 	}
+	
 	
 	public static void main(String[] args) {
 		
@@ -226,7 +249,8 @@ public class Person implements LookUp, Reply, Buy {
 	
 	//virtual functions, will be overrided by sub-class
 	@Override
-	public void buy(String sellerID) {
+	public boolean buy(String sellerID) {
+		return false;
 	}
 
 	@Override

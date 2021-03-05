@@ -1,5 +1,5 @@
 package action;
 
 public abstract interface Buy {
-	public void buy(String sellerID);
+	public boolean buy(String sellerID);
 }
