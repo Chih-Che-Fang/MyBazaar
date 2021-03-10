@@ -7,6 +7,11 @@ public class NoRole extends Person {
 	
 	
 	@Override
+	public void logStatus() {
+		logger.log(String.format("PeerID:%s with no role start to work", id));
+	}
+	
+	@Override
 	public boolean buy(String sellerID) {
 		return false;
 	}

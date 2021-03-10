@@ -9,6 +9,11 @@ public class Seller extends Person {
 	}
 
 	@Override
+	public void logStatus() {
+		logger.log(String.format("SellerID:%s start to sell %s", id, product));
+	}
+	
+	@Override
 	public boolean buy(String sellerID) {
 		if(decrementItemNum() && getItemNum() == 0) {
 			resetItemNum();

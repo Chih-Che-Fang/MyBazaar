@@ -70,7 +70,7 @@ public class Person implements LookUp, Reply, Buy {
 		this.id = id;
 		this.r = new Random();
 		this.product = product.equals("na")? productList[r.nextInt(productList.length)] : product;
-		this.type = product.equals("na")? roleList[r.nextInt(roleList.length)] : type;
+		this.type = type;
 		this.logger = new Logger(output);
 		
 		for(String nbr : neighbors) {
@@ -186,7 +186,8 @@ public class Person implements LookUp, Reply, Buy {
 		}
 		
 		//Access person information
-		String type = personInfo[0];
+		Random r = new Random();
+		String type = personInfo[0].equals("na")? Person.roleList[r.nextInt(roleList.length)] : personInfo[0];
 		Person p = null;
 		switch(type) {
 		case "b":
@@ -211,7 +212,8 @@ public class Person implements LookUp, Reply, Buy {
 		Person p = accessPerson(id);
 		Server server = new Server(args[0]);
 		server.start();
-
+		p.logStatus();
+		
 		//Buyer continue sending lookup msg
 		if(p.type.equals("b")){
 			
@@ -246,6 +248,10 @@ public class Person implements LookUp, Reply, Buy {
 
 	
 	//virtual functions, will be overrided by sub-class
+	public void logStatus() {
+		
+	}
+	
 	@Override
 	public boolean buy(String sellerID) {
 		return false;

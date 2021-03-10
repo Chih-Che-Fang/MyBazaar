@@ -8,6 +8,10 @@ public class Buyer extends Person {
 		super(type, id, product, neighbors, count, output);
 	}
 	
+	@Override
+	public void logStatus() {
+		logger.log(String.format("BuyerID:%s start to buy %s", id, product));
+	}
 	
 	@Override
 	public boolean buy(String sellerID) {
