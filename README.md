@@ -29,7 +29,7 @@ ServerID:0 receive msg:Reply 0 1 0 0 with path:0
 Output info to loc:info-id-0  
 BuyerID:0 bought fish from 1  
 BuyerID:0 start to buy boars  
-Output info to loc:info-id-0 
+Output info to loc:info-id-0  
 
 4.Check the output of test1.out ~ test4.out under output folder  
 
