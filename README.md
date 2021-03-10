@@ -9,9 +9,12 @@
 #Enviornment: Windows + Java SDK 8 Installed  
 #Applications:  
 [Milestone1]  
-Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
-Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
-Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.  
+test1:Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
+test2:Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
+test3:Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.  
+[Milestone2]
+test4 (Race condition included):One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever.
+
 
 
 # How to run?  
@@ -26,7 +29,9 @@ ServerID:0 receive msg:Reply 0 1 0 0 with path:0
 Output info to loc:info-id-0  
 BuyerID:0 bought fish from 1  
 BuyerID:0 start to buy boars  
-Output info to loc:info-id-0  
+Output info to loc:info-id-0 
+
+4.Check the output of test1.out ~ test4.out under output folder  
 
 
 
@@ -34,6 +39,7 @@ Output info to loc:info-id-0
 -	Bin: Complied JAVA class
 -	Src: Project source code
 -	Run_test.bat: testing script (windows)
+-	output: output file of all test cases
 -	run.sh: testing script (linux)
 -	libs: All dependency libs
 -	Docs: Design documents
