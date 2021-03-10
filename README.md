@@ -31,7 +31,7 @@ BuyerID:0 bought fish from 1
 BuyerID:0 start to buy boars  
 Output info to loc:info-id-0  
 
-4.Check the output of test1.out ~ test4.out under output folder  
+4.To verify the correctness, check the log output of test1.out ~ test4.out under output folder  
 
 
 # Directory/Files Description
