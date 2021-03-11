@@ -219,23 +219,20 @@ public class Person implements LookUp, Reply, Buy {
 			
 			while(true) {
 
-				//Send lookup message to neighbors
-				for(String nbrID : p.clients.keySet()) {
-					try {
-						Client c = p.clients.get(nbrID);
-						int maxHop = p.addressLookUp.address.size() - 1;
-						Integer ret = c.execute("MessageHandler.handleMsg", 
-									new Object[] {String.format("%s %s %s %s %s", "LookUp", p.product, maxHop, id, nbrID)});
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				
 				//Add duration for next lookup message
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+				}
+				
+				//Send lookup message to neighbors
+				for(String nbrID : p.clients.keySet()) {
+					Client c = p.clients.get(nbrID);
+					int maxHop = p.addressLookUp.address.size() - 1;
+					Integer ret = c.execute("MessageHandler.handleMsg", 
+							new Object[] {String.format("%s %s %s %s %s", "LookUp", p.product, maxHop, id, nbrID)});
+					System.out.println(String.format("BuyerID:%s sending neighbors lookup message to buy %s", p.id, p.product));
 				}
 				
 				//Update person information

@@ -1,0 +1,113 @@
+{
+    "Groups": [],
+    "Instances": [
+        {
+            "AmiLaunchIndex": 0,
+            "ImageId": "ami-05d7c468e832704bc",
+            "InstanceId": "i-081f5fdf203c98961",
+            "InstanceType": "t2.micro",
+            "KeyName": "677kp",
+            "LaunchTime": "2021-03-11T08:15:03+00:00",
+            "Monitoring": {
+                "State": "disabled"
+            },
+            "Placement": {
+                "AvailabilityZone": "us-east-1a",
+                "GroupName": "",
+                "Tenancy": "default"
+            },
+            "PrivateDnsName": "ip-172-31-16-149.ec2.internal",
+            "PrivateIpAddress": "172.31.16.149",
+            "ProductCodes": [],
+            "PublicDnsName": "",
+            "State": {
+                "Code": 0,
+                "Name": "pending"
+            },
+            "StateTransitionReason": "",
+            "SubnetId": "subnet-e02508ad",
+            "VpcId": "vpc-082d8375",
+            "Architecture": "x86_64",
+            "BlockDeviceMappings": [],
+            "ClientToken": "94686c79-90ba-4c0f-9d29-be7016b3e64e",
+            "EbsOptimized": false,
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "NetworkInterfaces": [
+                {
+                    "Attachment": {
+                        "AttachTime": "2021-03-11T08:15:03+00:00",
+                        "AttachmentId": "eni-attach-0b31cd157f78f13cd",
+                        "DeleteOnTermination": true,
+                        "DeviceIndex": 0,
+                        "Status": "attaching",
+                        "NetworkCardIndex": 0
+                    },
+                    "Description": "",
+                    "Groups": [
+                        {
+                            "GroupName": "default",
+                            "GroupId": "sg-7793487a"
+                        }
+                    ],
+                    "Ipv6Addresses": [],
+                    "MacAddress": "0a:50:b6:01:09:33",
+                    "NetworkInterfaceId": "eni-0f2002407d96c07b7",
+                    "OwnerId": "713219089746",
+                    "PrivateDnsName": "ip-172-31-16-149.ec2.internal",
+                    "PrivateIpAddress": "172.31.16.149",
+                    "PrivateIpAddresses": [
+                        {
+                            "Primary": true,
+                            "PrivateDnsName": "ip-172-31-16-149.ec2.internal",
+                            "PrivateIpAddress": "172.31.16.149"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Status": "in-use",
+                    "SubnetId": "subnet-e02508ad",
+                    "VpcId": "vpc-082d8375",
+                    "InterfaceType": "interface"
+                }
+            ],
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SecurityGroups": [
+                {
+                    "GroupName": "default",
+                    "GroupId": "sg-7793487a"
+                }
+            ],
+            "SourceDestCheck": true,
+            "StateReason": {
+                "Code": "pending",
+                "Message": "pending"
+            },
+            "Tags": [
+                {
+                    "Key": "MyBazaar32144321",
+                    "Value": "m3"
+                }
+            ],
+            "VirtualizationType": "hvm",
+            "CpuOptions": {
+                "CoreCount": 1,
+                "ThreadsPerCore": 1
+            },
+            "CapacityReservationSpecification": {
+                "CapacityReservationPreference": "open"
+            },
+            "MetadataOptions": {
+                "State": "pending",
+                "HttpTokens": "optional",
+                "HttpPutResponseHopLimit": 1,
+                "HttpEndpoint": "enabled"
+            },
+            "EnclaveOptions": {
+                "Enabled": false
+            }
+        }
+    ],
+    "OwnerId": "713219089746",
+    "ReservationId": "r-0506027711d8557fa"
+}
