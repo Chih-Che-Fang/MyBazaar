@@ -37,7 +37,8 @@ Output info to loc:info-id-0
 # Directory/Files Description
 -	Bin: Complied JAVA class
 -	Src: Project source code
--	Run_test.bat: testing script (windows)
+-	Run_local_test.bat: local testing script for mileston 1 and 2 (windows)
+-	Run_test.bat: testing script for milestone 3 (windows)
 -	output: output file of all test cases
 -	run.sh: testing script (linux)
 -	libs: All dependency libs
