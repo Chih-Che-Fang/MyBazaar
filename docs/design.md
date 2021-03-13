@@ -32,6 +32,9 @@ If a seller is found, then the seller sends back a response that traverses in th
 **LookUp:** Interface that defines how a buyer to search the network; all matching sellers respond to this message with their IDs using a reply(buyerID, sellerID) call.  
 **Sell:** Interface that defines how a seller respond to a buyer if the seller has the product the buyer like.  
 
+## Sequence Diagram
+![WorkFlow diagram](./WorkFlow.PNG "WorkFlow")
+
 # Test Cases
 **Test1 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
 **Test2 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
@@ -39,8 +42,6 @@ If a seller is found, then the seller sends back a response that traverses in th
 **Test4 (Milestone2):** One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever. **(This case also simulate race condition)**  
 **Test5 (Milestone3):** Run test1~test4 again, but deploy peers on different AWS EC2 instances.
 
-## Sequence Diagram
-![WorkFlow diagram](./WorkFlow.PNG "WorkFlow")
 
 # How it Works
  ## Bootstraping & Communication
@@ -59,7 +60,19 @@ Format = [Action arg1 (arg2) msgPath sentTo]
 ## Concurency / Race Condition Protection
 When a RPC server receive a new client rqeuest, its message handler will launch a new thread to process the message. To enable concurrent message processing, our peer to peer distributed system use a shared file to store the information of each peer (Ex. product, type, item count, etc...). Therfore, the information of each peer need to be proctected and we used a lock to protect the shared peer information. When a peer read/write its data, we ensured the whole operation and process is atomic and therefore avoid the race condition. To be more specific, it avoids that a seller with only 1 item sell multiple products to products to buyer (Since it is possible that a seller will send multiple reply to different buyers)
 
-## Automatic multiple server deployment
+## Peer Shared Information Format
+Format = [type peerID Product NeighborID Count TestName]
+
+**type:** Indicate whether the peer is a buyer, seller, or ro role. When the value is "na", system ramdomly assign a type to this peer.  
+**peerID:** The peer's ID  
+**Product:** The product the buyer want to buy or a seller want to sell. When the value is "na", system ramdomly assign a product to this peer.  
+**NeighborID:** Indicate all peer IDs that are neighbored to the peer. Neighbor ID is split by ",".  
+**Count:** Number of product left to sell.  
+**TestName:** Indicate the test name where the peer belongs to. It is used to mark what test the output log belongs to.  
+
+## Automatic Multiple Server Deployment
+
+
 
 # Evaluation and Measurements
 ## 1.	Compare the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
