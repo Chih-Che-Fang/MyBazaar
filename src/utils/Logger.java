@@ -4,13 +4,20 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Logger class for printing out logs
+ */
 public class Logger {
+	/* output information */
 	public String output = "";
 	
 	public Logger(String output) {
 		this.output = output;
 	}
-	
+
+	/**
+	 * @param msg logging out message output
+	 */
 	public void log(String msg) {
 		System.out.println(msg);
 		

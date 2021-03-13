@@ -13,9 +13,18 @@ package utils;
 import evaluation.SystemMonitor;
 
 
+/**
+ * XmlRPCClient Class for init and making rpc call.
+ */
   public class Client {
-	  
+	  /** XmlRpcClient variable **/
 	  XmlRpcClient client;
+
+
+	/**
+	 * Client Constructor for using for call neighbors.
+	 * @param addr addr for init neighbors connections.
+	 */
 	  public Client(String addr) {
 
           try {
@@ -45,7 +54,12 @@ import evaluation.SystemMonitor;
 		  }
 
 	  }
-	  
+
+	/**
+	 * @param method rpc method for xmlrpc client invoke.
+	 * @param params parameters for xmlrpc client invoke.
+	 * @return xmlrpc client call return value.
+	 */
 	  public Integer execute(String method, Object[] params) {
 			long start = System.currentTimeMillis();
 		

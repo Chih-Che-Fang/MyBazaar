@@ -15,13 +15,21 @@ import org.apache.xmlrpc.webserver.WebServer;
 
 import roles.Person;
 
+/**
+ * Multithreading XmlRPC Server.
+ * each instance will initiate a xml webserver listen.
+ */
   public class Server implements Runnable {
       private static final int port = 8080;
       protected String id = "";
       protected WebServer webServer;
   	  protected Thread t;//Server thread
   	  public static ReentrantLock lock = new ReentrantLock();
-  	  
+
+	/**
+	 * XmlRPC Server Constructor
+	 * @param id for instance id from config file
+	 */
       public Server(String id) {
  
           try {
@@ -54,7 +62,10 @@ import roles.Person;
 		}
     	  
       }
-      
+
+	/**
+	 * multi thread run function.
+	 */
 	@Override
 	public void run() {
 		 try {
