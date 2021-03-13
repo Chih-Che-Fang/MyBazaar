@@ -35,13 +35,6 @@ If a seller is found, then the seller sends back a response that traverses in th
 ## Sequence Diagram
 ![WorkFlow diagram](./WorkFlow.PNG "WorkFlow")
 
-# Test Cases
-**Test1 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
-**Test2 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
-**Test3 (Milestone1):** Randomly assign buyer and seller roles. Ensure that items keep being sold throughout  
-**Test4 (Milestone2):** One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever. **(This case also simulate race condition)**  
-**Test5 (Milestone3):** Run test1~test4 again, but deploy peers on different AWS EC2 instances.
-
 
 # How it Works
  ## Bootstraping & Communication
@@ -50,6 +43,7 @@ We applied XML-RPC framework as peer communication way. Each peer is at the same
 Server maps its message handler to a class. In our system, it mapps its message handler to MessageHandler class and the class will implement the logic of how to handle each type of mesaage. For each new request, the MessageHandler will lauch a new thread to process it.
 
 ## RPC Message Format
+We used our customized RPC message as follows:  
 Format = [Action arg1 (arg2) msgPath sentTo]  
 
 **Action:** Indicate whether it is a buy/sell/lookup request  
@@ -61,6 +55,7 @@ Format = [Action arg1 (arg2) msgPath sentTo]
 When a RPC server receive a new client rqeuest, its message handler will launch a new thread to process the message. To enable concurrent message processing, our peer to peer distributed system use a shared file to store the information of each peer (Ex. product, type, item count, etc...). Therfore, the information of each peer need to be proctected and we used a lock to protect the shared peer information. When a peer read/write its data, we ensured the whole operation and process is atomic and therefore avoid the race condition. To be more specific, it avoids that a seller with only 1 item sell multiple products to products to buyer (Since it is possible that a seller will send multiple reply to different buyers)
 
 ## Peer Shared Information Format
+We store the shared peer information and named it as info-id with the format:  
 Format = [type peerID Product NeighborID Count TestName]
 
 **type:** Indicate whether the peer is a buyer, seller, or ro role. When the value is "na", system ramdomly assign a type to this peer.  
@@ -71,7 +66,32 @@ Format = [type peerID Product NeighborID Count TestName]
 **TestName:** Indicate the test name where the peer belongs to. It is used to mark what test the output log belongs to.  
 
 ## Automatic Multiple Server Deployment
+### Dynamic server ceation
+We have pr-created Amazon AMI image that have Java SDK 8 installed. We dynamically create security group that allows RPC access permission. We create EC2 instance from the pre-created AMI image and attached it with the created security group. We tag each EC2 instance with a tag MyBazaar32144321" so that we can later access them and release them.
 
+### Dynamic code mgration and compliation
+We migrate the latest code to remote server using scp and invoke script linux_complie.sh to compile the code using ssh.
+
+### Run test 1 ~ test 4
+We write peer inital state (Ex. type, product, neighbors, etc...) to info-id and generate gloabal topology knowledge (Each peer's IP/port address) into config.txt using . Then we invoke the peer in each server (EC2 instance) using ssh. We wait a certain amount of time and kill all the peers after each test. Doing the same routine until all the tests finished.
+
+### Gather test output(log) for validation
+We use scp to pull test output under output folder from all remote server. We store the output from each sever to the local machine's output folder. Ex. If server1's ip address is 128.0.35.1, we store the output to output\128.0.35.1. Since all output is tagged with test name, we know which test and what is the machine the output belongs to. We used these information to validate if the distibuted system act as we expect.
+
+### Release AWS resource
+We terminate all EC2 instances and delete security group created in previous in the end of the test
+
+# Validation & Test
+## Test Cases
+**Test1 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
+**Test2 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
+**Test3 (Milestone1):** Randomly assign buyer and seller roles. Ensure that items keep being sold throughout  
+**Test4 (Milestone2):** One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever. **(This case also simulate race condition)**  
+**Test5 (Milestone3):** Run test1~test4 again, but deploy peers on different AWS EC2 instances.  
+
+## Automatic Test Scripts
+**run_local_test.bat:** This script will atomatically compile the code and perform test 1 ~ test 4 in order on local machine. Finally store output under output foler for validation.
+**run_distributed_test.bat:**  This script will atomatically create Amazon EC2 instances, migrating & compling the code and config file to remote servers, deploying peers on remote server, perform test 1 ~ test 4 in order on remote EC2 instances. Finally store output under output foler for validation and relase all cloud reources. For more detail please see the chapter, "How it Works/Automatic Multiple Server Deployment".
 
 
 # Evaluation and Measurements
