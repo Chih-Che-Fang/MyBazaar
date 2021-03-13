@@ -48,19 +48,28 @@ If a seller is found, then the seller sends back a response that traverses in th
 
 
 # Evaluation and Measurements
-1.	Measure the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
+## 1.	Compare the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
 
-Latency on multiple servers: Max Latency from 1000 requests = 100ms  
-Latency on 1 local server: Max Latency from 1000 requests = 13ms  
+Latency (multiple servers) | Latency (single server)
+------------ | -------------
+100ms | 13ms  
+
+*PS: latency calculated from 1000 sampled RPC requests
+
+Results show latency on single machine is much less than the latency when peers are dployed on multiple different servers. It's reasoable due to the network transportation time and marchsalling/unmarshalling process of RPC call. In single machine, the latency doesn't include network transportation time while in multiples servers network trasnportime time matters.
+
+## 2.	Compare the response times when multiple clients are concurrently making requests to a peer, for instance, you can vary the number of neighbors for each peer and observe how the average response time changes, make necessary plots to support your conclusions.  
 
 
-2.	Compute the average response time per client search request by measuring the response time seen by a client for, say, 1000 sequential requests. measure the response times when multiple clients are concurrently making requests to a peer, for instance, you can vary the number of neighbors for each peer and observe how the average response time changes, make necessary plots to support your conclusions.  
+Avg Response Time (1 neighbor) | Avg Response Time (3 neighbor) |  Avg Response Time (5 neighbor) |  Avg Response Time (9 neighbor)
+------------ | ------------- | ------------- | -------------
+5.1327ms | 5.12ms | 5.26ms  |  5.28ms
 
-(3 different servers, number of neighbors = 1) Nb1: Avg response time from 1000 requests = 4.8327ms  
-(3 different servers, number of neighbors = 3) Nb1: Avg response time from 1000 requests = 5.12ms  
-(3 different servers, number of neighbors = 5) Nb1: Avg response time from 1000 requests = 5.26ms  
-(3 different servers, number of neighbors = 9) Nb1: Avg response time from 1000 requests = 5.28ms  
-(3	different servers, number of neighbors = 20) Nb1: Avg response time from 1000 requests = 5.286ms  
+PS: all response time sampled from 1000 requests
+PS: We defines response time as the time the client receive response from remote servers, the time doesn't imply the message is being processed since we use asyncrounous RPC call design, the server will launch a new thread whenever it receive a request from client, sending message to background processing, and respond to client immediately.  
+
+Results show averged response time are almost the same (only slight increase) as more multiple clients are making requests to a peer. It matches what we expected since our system design will lauch a new thread whenever receive a client requests. The response time shouldn't be affacted by the number of concurrent request since the server respond to clients as soon as it receive the request. However, we still see a little increase in avergage response time, I think it might be affacted by the time used to launch new thread. As more request recive concurrently, the server spends some time launching new thread, which cause the slight difference.  
+
 
 # Design Tradeoffs
 
