@@ -42,10 +42,17 @@ If a seller is found, then the seller sends back a response that traverses in th
 
 
 # How it Works
-## Bootstraping  
+ ## Bootstraping & Communication
+We applied XML-RPC framework as peer communication way. Each peer is at the same time a RPC server and RPC client. When a peering is created, it lauch a listening RPC server to keep receive client request from remote peers. Since each peer has global knowledge (Ex. Other peer's ip and port address, what neighor it has, etc...) of the network topology, it can sends search request to neighbors and wait for their response.  
+
+Server maps its message handler to a class. In our system, it mapps its message handler to MessageHandler class and the class will implement the logic of how to handle each type of mesaage. For each new request, the MessageHandler will lauch a new thread to process it.
+
+## RPC Message Format
+
 
 ## Concurency
 
+## Automatic multiple server deployment
 
 # Evaluation and Measurements
 ## 1.	Compare the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
