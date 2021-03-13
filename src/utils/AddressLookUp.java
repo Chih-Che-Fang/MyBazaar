@@ -6,10 +6,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AddressLookUp parse the information from config file to init neighbors.
+ */
 public class AddressLookUp {
-	
+
+	/** ArrayList to record all the neighbors **/
 	public List<String> address = new ArrayList<>();
-	
+
+
+	/**
+	 * @param config config file read from 'config.txt'.
+	 */
 	public AddressLookUp(String config) {
 
 		try {
@@ -25,7 +33,11 @@ public class AddressLookUp {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * @param id get the neighbor information by id.
+	 * @return return string of the neighbor/client information.
+	 */
 	public String get(String id) {
 		return address.get(Integer.parseInt(id));
 	}

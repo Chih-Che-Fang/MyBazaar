@@ -5,16 +5,25 @@ import java.util.concurrent.locks.ReentrantLock;
 import roles.Person;
 
 public class HandlerThread implements Runnable {
+	/** datagram/data structure for rpc calls **/
 	String msg = "";
+	/** ReentrantLock used for race condition control **/
 	ReentrantLock lock;
-	
+	/** message handler thread **/
 	protected Thread t;//Message Handler thread
-	 
+
+	/**
+	 * @param msg datagram/data structure for rpc calls.
+	 * @param lock ReentrantLock used for race condition control.
+	 */
 	public HandlerThread(String msg, ReentrantLock lock) {
 		this.msg = msg;
 		this.lock = lock;
 	}
-	
+
+	/**
+	 * Thread execution function.
+	 */
 	@Override
 	public void run() {
 		//Parse message
@@ -44,13 +53,10 @@ public class HandlerThread implements Runnable {
 				break;
 		}
 	}
-	
-	/* Function:
-	 * Join the listener thread 
-	 * Input:
-	 * None
-	 * Output:
-	 * None
+
+	/**
+	 * Join the listener thread
+	 * @return -1 if thread is None.
 	 */
 	public int join() {
 
@@ -63,13 +69,9 @@ public class HandlerThread implements Runnable {
 		}
 		return -1;
 	}
-	
-	/* Function:
-	 * Start listening a worker
-	 * Input:
-	 * None
-	 * Output:
-	 * None
+
+	/**
+	 * Start listening a worker.
 	 */
 	public void start() {
 		t = new Thread (this);

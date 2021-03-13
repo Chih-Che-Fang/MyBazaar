@@ -11,9 +11,18 @@ package utils;
   import org.apache.xmlrpc.client.util.ClientFactory;
 
 
+/**
+ * XmlRPCClient Class for init and making rpc call.
+ */
   public class Client {
-	  
+	  /** XmlRpcClient variable **/
 	  XmlRpcClient client;
+
+
+	/**
+	 * Client Constructor for using for call neighbors.
+	 * @param addr addr for init neighbors connections.
+	 */
 	  public Client(String addr) {
 
           try {
@@ -43,7 +52,12 @@ package utils;
 		  }
 
 	  }
-	  
+
+	/**
+	 * @param method rpc method for xmlrpc client invoke.
+	 * @param params parameters for xmlrpc client invoke.
+	 * @return xmlrpc client call return value.
+	 */
 	  public Integer execute(String method, Object[] params) {
 			Integer res = null;
 			try {

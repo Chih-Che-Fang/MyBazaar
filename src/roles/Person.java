@@ -24,24 +24,39 @@ import utils.Logger;
 import utils.Server;
 
 public class Person implements LookUp, Reply, Buy {
-
+	/** different product list for seller and buyer **/
 	static final String[] productList = {"fish", "salt", "boars"};
+	/** different roles for person */
 	static final String[] roleList = {"b", "s"};
+	/** roles type for Person 1:buyer 0:seller **/
 	public String type = ""; //1:buyer 0:seller
+	/** Person (Peer) id also read from info-id config file **/
 	public String id = "";
+	/** Product person seller hold or buyer trying to buy **/
 	public String product = "";
+	/** atomicInteger used to make count decreasing/increasing atomic **/
 	private final AtomicInteger count;
-
+	/** random variable **/
 	public Random r;
-
+	/** HashMap to save all the neighbors **/
 	public HashMap<String, Client> clients = new HashMap<>();
+	/** AddressLookUp class to parse out address information **/
 	public AddressLookUp addressLookUp;
+	/** logger for printing logs **/
 	public Logger logger = null;
 
+	/**
+	 * get item count atomically
+	 * @return Int: number of items.
+	 */
 	int getItemNum() {
 		return count.get();
 	}
 
+	/**
+	 * decrease count number using CAS
+	 * @return  true means decrease success, false means failed.
+	 */
 	boolean decrementItemNum() {
 
 		while(true) {
@@ -54,6 +69,9 @@ public class Person implements LookUp, Reply, Buy {
 		}
 	}
 
+	/**
+	 * reset count number when seller sold out all the items switch to a new product.
+	 */
 	void resetItemNum() {
 		while(true) {
 			if(count.compareAndSet(0, Seller.m)) {
@@ -62,9 +80,15 @@ public class Person implements LookUp, Reply, Buy {
 		}
 	}
 
-
+	/**
+	 * @param type  Buyer(b) or Seller(s) or NoRole(na).
+	 * @param id id of a person.
+	 * @param product product string buy or sell (salt, boar, fish).
+	 * @param neighbors neighbors array to save all the neighbors close to person.
+	 * @param count count of items seller hold.
+	 * @param output output place for logging.
+	 */
 	public Person(String type, String id, String product, String[] neighbors, int count, String output) { /*s 1 fish 0 0*/
-		
 		this.addressLookUp = new AddressLookUp("config.txt");
 		this.count = new AtomicInteger(count);
 		this.id = id;
@@ -78,8 +102,13 @@ public class Person implements LookUp, Reply, Buy {
 		}
 		//this.dump();
 	}
-	
-	//Message handlers, will call implemented function interfaces: lookup, buy, or reply
+
+	/**
+	 * Message handlers, will call implemented function interfaces: lookup, buy, or reply
+	 * @param product the specific product buyer looking for
+	 * @param maxHop  the maxHop of the message, decrease by one every time pass through neighbors
+	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
+	 */
 	public void handleLookUpMsg(String product, int maxHop, String msgPath) {
 		
 		String senderId = (msgPath.charAt(msgPath.length() - 1) - '0') + "";
@@ -103,7 +132,12 @@ public class Person implements LookUp, Reply, Buy {
 			}
 		}
 	}
-	
+
+	/**
+	 * @param buyerID  id of the buyer
+	 * @param sellerID sellerId is the id of origin seller of the message
+	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
+	 */
 	public void handleReplyMsg(String buyerID, String sellerID, String msgPath) {
 		
 		
@@ -120,7 +154,11 @@ public class Person implements LookUp, Reply, Buy {
 		}
 		
 	}
-	
+
+	/**
+	 * @param sellerId sellerId is the id of origin seller of the message
+	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
+	 */
 	public void handleBuyMsg(String sellerId, String msgPath) {
 		if(msgPath.substring(1).equals(product) && buy(sellerId)) {
 			String senderID = msgPath.charAt(0) + "";
@@ -129,7 +167,10 @@ public class Person implements LookUp, Reply, Buy {
 					new Object[] {String.format("%s %s %s %s", "Buy", sellerId, msgPath, senderID)});
 		}
 	}
-	
+
+	/**
+	 * @return return neighbors of peers in a string formats
+	 */
 	//Return neighbors of the peer
 	public String getNeighbors() {
 		StringBuilder res = new StringBuilder();
@@ -139,8 +180,10 @@ public class Person implements LookUp, Reply, Buy {
 		res.setLength(Math.max(0, res.length() - 1));
 		return res.toString();
 	}
-	
-	//Dump peer information to disk
+
+	/**
+	 * Dump peer information to disk
+	 */
 	public void dump() {
 		FileWriter fstream;
 		BufferedWriter out;
@@ -159,7 +202,12 @@ public class Person implements LookUp, Reply, Buy {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * Read info config file to init different Roles (Buyer,Seller,NoRole)
+	 * @param id extract from info-id-%s config file
+	 * @return Child Class one of (Buyer,Seller,NoRole) from Person Parent Class.
+	 */
 	public static Person accessPerson(String id) {
 		
 		String personFile = String.format("info-id-%s", id);
@@ -203,8 +251,11 @@ public class Person implements LookUp, Reply, Buy {
 
 		return p;
 	}
-	
-	
+
+
+	/**
+	 * program main entry
+	 */
 	public static void main(String[] args) {
 		
 		//Start server and message handler
@@ -243,22 +294,33 @@ public class Person implements LookUp, Reply, Buy {
 		server.join();
 	}
 
-	
-	//virtual functions, will be overrided by sub-class
+
+	/**
+	 * virtual functions, will be overrided by sub-class
+	 */
 	public void logStatus() {
 		
 	}
-	
+
+	/**
+	 * virtual functions, will be overrided by sub-class
+	 */
 	@Override
 	public boolean buy(String sellerID) {
 		return false;
 	}
 
+	/**
+	 * virtual functions, will be overrided by sub-class
+	 */
 	@Override
 	public boolean reply(String buyerID, String sellerID) {
 		return false;
 	}
 
+	/**
+	 * virtual functions, will be overrided by sub-class
+	 */
 	@Override
 	public boolean lookUp(String product, int hopCount) {
 		return false;
