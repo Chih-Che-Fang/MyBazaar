@@ -73,7 +73,7 @@ We have pr-created Amazon AMI image that have Java SDK 8 installed. We dynamical
 We migrate the latest code to remote server using scp and invoke script linux_complie.sh to compile the code using ssh.
 
 ### Run test 1 ~ test 4
-We write peer inital state (Ex. type, product, neighbors, etc...) to info-id and generate gloabal topology knowledge (Each peer's IP/port address) into config.txt using . Then we invoke the peer in each server (EC2 instance) using ssh. We wait a certain amount of time and kill all the peers after each test. Doing the same routine until all the tests finished.
+We write peer inital state (Ex. type, product, neighbors, etc...) to info-id and generate gloabal topology knowledge (Each peer's IP/port address) into config.txt using . Then we deploy the peers in each server (EC2 instance) using ssh. We wait a certain amount of time and kill all the peers after each test. Doing the same routine until all the tests finished.
 
 ### Gather test output(log) for validation
 We use scp to pull test output under output folder from all remote server. We store the output from each sever to the local machine's output folder. Ex. If server1's ip address is 128.0.35.1, we store the output to output\128.0.35.1. Since all output is tagged with test name, we know which test and what is the machine the output belongs to. We used these information to validate if the distibuted system act as we expect.
@@ -90,8 +90,8 @@ We terminate all EC2 instances and delete security group created in previous in 
 **Test5 (Milestone3):** Run test1~test4 again, but deploy peers on different AWS EC2 instances.  
 
 ## Automatic Test Scripts
-**run_local_test.bat:** This script will atomatically compile the code and perform test 1 ~ test 4 in order on local machine. Finally store output under output foler for validation.
-**run_distributed_test.bat:**  This script will atomatically create Amazon EC2 instances, migrating & compling the code and config file to remote servers, deploying peers on remote server, perform test 1 ~ test 4 in order on remote EC2 instances. Finally store output under output foler for validation and relase all cloud reources. For more detail please see the chapter, "How it Works/Automatic Multiple Server Deployment".
+**run_local_test.bat:** This script will atomatically compile the code and perform test 1 ~ test 4 in order on local machine. Finally store output under output foler for validation.  
+**run_distributed_test.bat:**  This script will atomatically create Amazon EC2 instances, migrating & compling the code and config file to remote servers, deploying peers on remote server, perform test 1 ~ test 4 in order on remote EC2 instances. Finally store output under output foler for validation and relase all cloud reources. For more detail please see the chapter, "How it Works/Automatic Multiple Server Deployment".  
 
 
 # Evaluation and Measurements
