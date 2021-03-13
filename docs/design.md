@@ -43,14 +43,19 @@ If a seller is found, then the seller sends back a response that traverses in th
 
 # How it Works
  ## Bootstraping & Communication
-We applied XML-RPC framework as peer communication way. Each peer is at the same time a RPC server and RPC client. When a peering is created, it lauch a listening RPC server to keep receive client request from remote peers. Since each peer has global knowledge (Ex. Other peer's ip and port address, what neighor it has, etc...) of the network topology, it can sends search request to neighbors and wait for their response.  
+We applied XML-RPC framework as peer communication way. Each peer is at the same time a RPC server and RPC client. When a peering is created, it lauch a listening RPC server to keep receive client request from remote peers. Since each peer has global knowledge (Ex. Other peer's ip and port address, what neighor it has, etc...) of the network topology, it can sends search request to discover neighbors and wait for their response. In contrast, if a peer receive a rqeuest from peers, it knows the ip/port address and is able to respond to the peer. 
 
 Server maps its message handler to a class. In our system, it mapps its message handler to MessageHandler class and the class will implement the logic of how to handle each type of mesaage. For each new request, the MessageHandler will lauch a new thread to process it.
 
 ## RPC Message Format
+Format = [Action arg1 (arg2) msgPath sentTo]  
+Action: Indicate whether it is a buy/sell/lookup request  
+arg1, arg2: Argument of the request  
+msgPath: The path of the message, used by reply message to traverse original route back to the buyer.  
+sentTo: Indicate what peer the message is sending to. The information is used by RPC server to deliever this request to the right peer.  
 
-
-## Concurency
+## Concurency / Race Condition Protection
+When a RPC server receive a new client rqeuest, its message handler will launch a new thread to process the message. To enable concurrent message processing, our peer to peer distributed system use a shared file to store the information of each peer (Ex. product, type, item count, etc...). Therfore, the information of each peer need to be proctected and we used a lock to protect the shared peer information. When a peer read/write its data, we ensured the whole operation and process is atomic and therefore avoid the race condition. To be more specific, it avoids that a seller with only 1 item sell multiple products to products to buyer (Since it is possible that a seller will send multiple reply to different buyers)
 
 ## Automatic multiple server deployment
 
