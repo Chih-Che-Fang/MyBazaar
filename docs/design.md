@@ -34,6 +34,28 @@ Server: xml-rpc server implementation also to register MessageHandler.
 The overall diagram shows below:
 ![UML diagram](./UML.png "UML")
 
+## Class Discription  
+**Person:** A person represent a peer. It's a abstract (Super-class) class of buyers, sellers, and peer with no role, define all required attributes and action (lookup/buy/sell) each peer must have.  
+**Buyer:** A buyer peer, it implement buy/sell/lookup and inherite all attributes from person class.  
+**Seller:** A seller peer, it implement buy/sell/lookup and inherite all attributes from person class.  
+**NoRole:** Peer with no role, it implement buy/sell/lookup and inherite all attributes from person class.  
+**Server:** A server represent the RPC server resides in each peer.  
+**Client:** A client represent the RPC client used to access remote server.    
+**SystemMonitor:** A class used to store and claculate the latency / averge respond time of client requests.  
+**AddressLookUp:** A (neighbor, ip) mapping lookup owned by each peer, allowing a peer to send RPC requests to other peer.  
+**Logger:** A class used to output important output for each test cases. We can therefore veify the correctness of each test case.  
+**MessageHandle:**
+**MessageHandleThread:**
+
+
+## Interface Discription:  
+**Buy:** Interface that defines how buyer respond to the seller to buy a product.  
+**LookUp:** Interface that defines how a buyer to search the network; all matching sellers respond to this message with their IDs using a reply(buyerID, sellerID) call.  
+**Sell:** Interface that defines how a seller respond to a buyer if the seller has the product the buyer like.  
+
+
+# Evaluation and Measurements
+
 
 # Design tradeoffs
 
