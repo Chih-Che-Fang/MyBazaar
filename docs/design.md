@@ -39,7 +39,8 @@ If a seller is found, then the seller sends back a response that traverses in th
 **Test4 (Milestone2):** One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever. **(This case also simulate race condition)**  
 **Test5 (Milestone3):** Run test1~test4 again, but deploy peers on different AWS EC2 instances.
 
-
+## Sequence Diagram
+![WorkFlow diagram](./WorkFlow.PNG "WorkFlow")
 
 # How it Works
  ## Bootstraping & Communication
@@ -49,10 +50,11 @@ Server maps its message handler to a class. In our system, it mapps its message 
 
 ## RPC Message Format
 Format = [Action arg1 (arg2) msgPath sentTo]  
-Action: Indicate whether it is a buy/sell/lookup request  
-arg1, arg2: Argument of the request  
-msgPath: The path of the message, used by reply message to traverse original route back to the buyer.  
-sentTo: Indicate what peer the message is sending to. The information is used by RPC server to deliever this request to the right peer.  
+
+**Action:** Indicate whether it is a buy/sell/lookup request  
+**arg1, arg2:** Argument of the request  
+**msgPath:** The path of the message, used by reply message to traverse original route back to the buyer.  
+**sentTo:** Indicate what peer the message is sending to. The information is used by RPC server to deliever this request to the right peer.  
 
 ## Concurency / Race Condition Protection
 When a RPC server receive a new client rqeuest, its message handler will launch a new thread to process the message. To enable concurrent message processing, our peer to peer distributed system use a shared file to store the information of each peer (Ex. product, type, item count, etc...). Therfore, the information of each peer need to be proctected and we used a lock to protect the shared peer information. When a peer read/write its data, we ensured the whole operation and process is atomic and therefore avoid the race condition. To be more specific, it avoids that a seller with only 1 item sell multiple products to products to buyer (Since it is possible that a seller will send multiple reply to different buyers)
