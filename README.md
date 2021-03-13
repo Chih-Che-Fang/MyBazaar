@@ -19,7 +19,7 @@ test4 (Race condition included):One seller of boar, 3 buyers of boars, the remai
 
 # How to run?  
 1. Switch to the root directory of this project (Ex. cd /MyBazaar) and confirm the path contains no "blank"  
-2. Perform run_test.bat on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
+2. Perform run_local_test.bat on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
 3. See the testing result on console, it will tell you if the buyer bought the products or not. For every test case, it will jump two console windows, one represent buyer process and another represent seller process, they will individually print logs like:  
 
 Output info to loc:info-id-0  
@@ -37,7 +37,8 @@ Output info to loc:info-id-0
 # Directory/Files Description
 -	Bin: Complied JAVA class
 -	Src: Project source code
--	Run_test.bat: testing script (windows)
+-	Run_local_test.bat: local testing script for mileston 1 and 2 (windows)
+-	Run_test.bat: testing script for milestone 3 (windows)
 -	output: output file of all test cases
 -	run.sh: testing script (linux)
 -	libs: All dependency libs
