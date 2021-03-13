@@ -18,44 +18,44 @@ echo 4,127.0.0.1:8085>>config.txt
    
    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
-   TIMEOUT 12
+   TIMEOUT 210
    taskkill /F /IM java.exe
    TIMEOUT 2
   
- REM run test case 2:  one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.
-  
-   echo b 0 fish 1 1 test2 > info-id-0
-   echo s 1 boars 0 1 test2 > info-id-1
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
-   TIMEOUT 12
-   taskkill /F /IM java.exe
-   TIMEOUT 2
- 
- REM run test case 3: Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.
-  
-   echo na 0 na 1 1 test3 > info-id-0
-   echo na 1 na 0 1 test3 > info-id-1
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
-   TIMEOUT 12
-   taskkill /F /IM java.exe
-   TIMEOUT 2
-
- REM run test case 4: One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network.
-  echo b 0 boars 4 1 test4 > info-id-0
-  echo s 1 boars 4,5 1 test4 > info-id-1
-  echo b 2 boars 5 1 test4 > info-id-2
-  echo b 3 boars 5 1 test4 > info-id-3
-  echo n 4 boars 0,1 1 test4 > info-id-4
-  echo n 5 boars 1,2,3 1 test4 > info-id-5
- 
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 2
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 3
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 4
-   start cmd /k java -cp ".\bin;.\libs\*" roles.Person 5
-   TIMEOUT 12
-   taskkill /F /IM java.exe
-pause
+REM  REM run test case 2:  one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.
+REM   
+REM    echo b 0 fish 1 1 test2 > info-id-0
+REM    echo s 1 boars 0 1 test2 > info-id-1
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
+REM    TIMEOUT 12
+REM    taskkill /F /IM java.exe
+REM    TIMEOUT 2
+REM  
+REM  REM run test case 3: Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.
+REM   
+REM    echo na 0 na 1 1 test3 > info-id-0
+REM    echo na 1 na 0 1 test3 > info-id-1
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
+REM    TIMEOUT 12
+REM    taskkill /F /IM java.exe
+REM    TIMEOUT 2
+REM 
+REM  REM run test case 4: One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network.
+REM   echo b 0 boars 4 1 test4 > info-id-0
+REM   echo s 1 boars 4,5 1 test4 > info-id-1
+REM   echo b 2 boars 5 1 test4 > info-id-2
+REM   echo b 3 boars 5 1 test4 > info-id-3
+REM   echo n 4 boars 0,1 1 test4 > info-id-4
+REM   echo n 5 boars 1,2,3 1 test4 > info-id-5
+REM  
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 1
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 0
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 2
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 3
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 4
+REM    start cmd /k java -cp ".\bin;.\libs\*" roles.Person 5
+REM    TIMEOUT 12
+REM    taskkill /F /IM java.exe
+REM pause

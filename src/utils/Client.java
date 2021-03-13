@@ -10,6 +10,8 @@ package utils;
   import org.apache.xmlrpc.client.XmlRpcCommonsTransportFactory;
   import org.apache.xmlrpc.client.util.ClientFactory;
 
+import evaluation.SystemMonitor;
+
 
   public class Client {
 	  
@@ -45,12 +47,15 @@ package utils;
 	  }
 	  
 	  public Integer execute(String method, Object[] params) {
+			long start = System.currentTimeMillis();
+		
 			Integer res = null;
 			try {
 				res = (Integer) client.execute(method, params);
 			} catch (XmlRpcException e) {
 				e.printStackTrace();
 			}
+			SystemMonitor.addLatencySample((int)(System.currentTimeMillis() - start));
 			return res;
 	  }
   }

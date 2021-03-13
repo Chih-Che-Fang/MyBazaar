@@ -221,7 +221,7 @@ public class Person implements LookUp, Reply, Buy {
 
 				//Add duration for next lookup message
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
