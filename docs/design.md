@@ -33,11 +33,34 @@ If a seller is found, then the seller sends back a response that traverses in th
 **Sell:** Interface that defines how a seller respond to a buyer if the seller has the product the buyer like.  
 
 # Test Cases
+**Test1 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
+**Test2 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
+**Test3 (Milestone1):** Randomly assign buyer and seller roles. Ensure that items keep being sold throughout  
+**Test4 (Milestone2):** One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever. **This case also simulate race condition)**  
+**Test5 (Milestone3):** Run test1~test4 again, but deploy peers on different AWS EC2 instances.
+
+
 
 # How it Works
+## Bootstraping  
+
+## Concurency
+
 
 # Evaluation and Measurements
+1.	Measure the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
 
+Latency on multiple servers: Max Latency from 1000 requests = 100ms  
+Latency on 1 local server: Max Latency from 1000 requests = 13ms  
+
+
+2.	Compute the average response time per client search request by measuring the response time seen by a client for, say, 1000 sequential requests. measure the response times when multiple clients are concurrently making requests to a peer, for instance, you can vary the number of neighbors for each peer and observe how the average response time changes, make necessary plots to support your conclusions.  
+
+(3 different servers, number of neighbors = 1) Nb1: Avg response time from 1000 requests = 4.8327ms  
+(3 different servers, number of neighbors = 3) Nb1: Avg response time from 1000 requests = 5.12ms  
+(3 different servers, number of neighbors = 5) Nb1: Avg response time from 1000 requests = 5.26ms  
+(3 different servers, number of neighbors = 9) Nb1: Avg response time from 1000 requests = 5.28ms  
+(3	different servers, number of neighbors = 20) Nb1: Avg response time from 1000 requests = 5.286ms  
 
 # Design Tradeoffs
 
