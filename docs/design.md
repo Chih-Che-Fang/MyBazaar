@@ -129,6 +129,32 @@ SellerID:1 start to sell boars
 BuyerID:0 bought fish from 1  
 BuyerID:0 start to buy fish  
 
+## Verification of all test cases  
+**Test1 output:** 
+BuyerID:0 start to buy fish  
+SellerID:1 start to sell fish  
+SellerID:1 start to sell fish  
+BuyerID:0 bought fish from 1  
+BuyerID:0 start to buy salt  
+**Result:** Pass, buyer 1 successfully buy out fish from seller 1  
+
+**Test2 output:** 
+BuyerID:0 start to buy fish  
+SellerID:1 start to sell boars  
+**Result:** Pass, buyer 1 buy nothing, seller 1 sells nothing  
+
+
+**Test3 output:** 
+BuyerID:0 start to buy fish  
+SellerID:1 start to sell boars  
+**Result:** Pass, buyer 1 buy nothing, seller 1 sells nothing  
+
+
+**Test4 output:** 
+BuyerID:0 start to buy fish  
+SellerID:1 start to sell boars  
+**Result:** Pass, buyer 1 buy nothing, seller 1 sells nothing  
+
 
 # Evaluation and Measurements
 ## 1.	Compare the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
