@@ -151,24 +151,45 @@ BuyerID:1 start to buy salt
 
 
 **Test4 output:** 
-SellerID:1 start to sell boars
-PeerID:5 with no role start to work
-BuyerID:2 start to buy boars
-BuyerID:0 start to buy boars
-BuyerID:3 start to buy boars
-PeerID:4 with no role start to work
-SellerID:1 replied buyerID:0
-SellerID:1 replied buyerID:2
-SellerID:1 replied buyerID:3
-SellerID:1 start to sell boars
-SellerID:1 start to sell fish
-BuyerID:2 bought boars from 1
-BuyerID:2 start to buy fish
-SellerID:1 replied buyerID:2
-SellerID:1 start to sell salt
-BuyerID:2 bought fish from 1
-BuyerID:2 start to buy fish
-**Result:** Pass, buyer 0,2,3 want to buy boars from seller 1, and seller 1 also replied all of them (race condition), only buyer 2 baught boars from seller 1 successfully
+SellerID:1 start to sell boars  
+PeerID:5 with no role start to work  
+BuyerID:2 start to buy boars  
+BuyerID:0 start to buy boars  
+BuyerID:3 start to buy boars  
+PeerID:4 with no role start to work  
+SellerID:1 replied buyerID:0  
+SellerID:1 replied buyerID:2  
+SellerID:1 replied buyerID:3  
+SellerID:1 start to sell boars  
+SellerID:1 start to sell fish  
+BuyerID:2 bought boars from 1  
+BuyerID:2 start to buy fish  
+SellerID:1 replied buyerID:2  
+SellerID:1 start to sell salt  
+BuyerID:2 bought fish from 1  
+BuyerID:2 start to buy fish  
+**Result:** Pass, buyer 0,2,3 want to buy boars from seller 1, and seller 1 also replied all of them (race condition), only buyer 2 baught boars from seller 1 successfully  
+
+**Test5 output: (Run on distributed servers, log is collect from different servers)** 
+BuyerID:2 start to buy boars  
+BuyerID:0 start to buy boars  
+SellerID:1 start to sell boars  
+PeerID:5 with no role start to work  
+PeerID:4 with no role start to work  
+BuyerID:3 start to buy boars  
+SellerID:1 replied buyerID:0  
+SellerID:1 replied buyerID:3  
+SellerID:1 replied buyerID:2  
+SellerID:1 start to sell boars  
+BuyerID:3 bought boars from 1  
+SellerID:1 start to sell fish  
+BuyerID:3 start to buy boars   
+SellerID:1 start to sell salt  
+SellerID:1 replied buyerID:2  
+SellerID:1 start to sell salt  
+BuyerID:2 bought salt from 1  
+BuyerID:2 start to buy fish  
+**Result:** Pass, buyer 0,2,3 want to buy boars from seller 1, and seller 1 also replied all of them (race condition), only buyer 3 baught boars from seller 1 successfully  
 
 # Evaluation and Measurements
 ## 1.	Compare the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
