@@ -117,7 +117,7 @@ We terminate all EC2 instances and delete security group created in previous in 
 
 **run_distributed_test.bat:**  This script will atomatically create Amazon EC2 instances, migrating & compling the code and config file to remote servers, deploying peers on remote server, perform test 1 ~ test 4 in order on remote EC2 instances. Finally store output under output foler for validation and relase all cloud reources. For more detail please see the chapter, "How it Works/Automatic Multiple Server Deployment".  
 
-## Test Output (Log)
+## Test Output (Log)  
 We store all testing output under output folder and use them to validate the correctness of each test case. For local testing, each file is named with testID.out (Ex. test4.out). It will print all peers' log on that machine, like which buyer baught a product or which seller sold a product. For distributed testing on different server, we store all remote server's output under output/ipaddress (Ex.output/127.35.6.1). In this way, we know which test and machine this log/output belongs to and easy to debug. Here is one output example of test1:  
 
 SellerID:1 start to sell fish  
@@ -130,7 +130,7 @@ BuyerID:0 bought fish from 1
 BuyerID:0 start to buy fish  
 
 ## Verification of All Test Cases  
-**Test1 output:** 
+**Test1 output:**  
 BuyerID:0 start to buy fish  
 SellerID:1 start to sell fish  
 SellerID:1 start to sell fish  
@@ -138,19 +138,19 @@ BuyerID:0 bought fish from 1
 BuyerID:0 start to buy salt  
 **Result:** Pass, buyer 1 successfully buy out fish from seller 1  
 
-**Test2 output:** 
+**Test2 output:**  
 BuyerID:0 start to buy fish  
 SellerID:1 start to sell boars  
 **Result:** Pass, buyer 1 buy nothing, seller 1 sells nothing  
 
 
-**Test3 output:** 
+**Test3 output:**  
 BuyerID:0 start to buy boars  
 BuyerID:1 start to buy salt  
 **Result:** Pass, buyer 1 buy nothing, seller 1 sells nothing  
 
 
-**Test4 output:** 
+**Test4 output:**  
 SellerID:1 start to sell boars  
 PeerID:5 with no role start to work  
 BuyerID:2 start to buy boars  
@@ -170,7 +170,7 @@ BuyerID:2 bought fish from 1
 BuyerID:2 start to buy fish  
 **Result:** Pass, buyer 0,2,3 want to buy boars from seller 1, and seller 1 also replied all of them (race condition), only buyer 2 baught boars from seller 1 successfully  
 
-**Test5 output: (Run on distributed servers, log is collect from different servers)** 
+**Test5 output: (Run on distributed servers, log is collect from different servers)**  
 BuyerID:2 start to buy boars  
 BuyerID:0 start to buy boars  
 SellerID:1 start to sell boars  
