@@ -51,6 +51,14 @@ Format = [Action arg1 (arg2) msgPath sentTo]
 **msgPath:** The path of the message, used by reply message to traverse original route back to the buyer.  
 **sentTo:** Indicate what peer the message is sending to. The information is used by RPC server to deliever this request to the right peer.  
 
+## Global IP/Port Address Configuration
+To allow peers to communicate with each other, we need to give them other peer's address and port, we use a file - config.txt to ecord the information.
+Format = [PeerID, IPAddress:Port]  
+
+**PeerID:** ID of the peer
+**IPAddress:Port:** The peer's ipv4 address and listening port  
+
+
 ## Concurency / Race Condition Protection
 When a RPC server receive a new client rqeuest, its message handler will launch a new thread to process the message. To enable concurrent message processing, our peer to peer distributed system use a shared file to store the information of each peer (Ex. product, type, item count, etc...). Therfore, the information of each peer need to be proctected and we used a lock to protect the shared peer information. When a peer read/write its data, we ensured the whole operation and process is atomic and therefore avoid the race condition. To be more specific, it avoids that a seller with only 1 item sell multiple products to products to buyer (Since it is possible that a seller will send multiple reply to different buyers)
 
