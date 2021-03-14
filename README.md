@@ -6,20 +6,25 @@
 
 *I Aggree to share this source code with my group members
 
-#Enviornment: Windows + Java SDK 8 Installed  
-#Applications:  
-[Milestone1]  
+**Enviornment:**  Windows + Java SDK 8 Installed  
+**Applications:**   
+**[Milestone1]**  
 test1:Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
 test2:Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
 test3:Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.  
-[Milestone2]  
+**[Milestone2]**
 test4 (Race condition included):One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever.
-
-
+**[Milestone3]**
+test 5:Use run_distributed_test.bat to run and deploy test1 ~ test4 on different servers.
 
 # How to run?  
-1. Switch to the root directory of this project (Ex. cd /MyBazaar) and confirm the path contains no "blank"  
+
+1. Switch to the root directory of this project (Ex. cd /MyBazaar) and confirm the path contains no "blank"
+**[If Single Server]** 
 2. Perform run_local_test.bat on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
+**[If Multiple Server]**
+2. Perform run_distributed_test.bat on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
+
 3. See the testing result on console, it will tell you if the buyer bought the products or not. For every test case, it will jump two console windows, one represent buyer process and another represent seller process, they will individually print logs like:  
 
 Output info to loc:info-id-0  
@@ -38,9 +43,14 @@ Output info to loc:info-id-0
 -	Bin: Complied JAVA class
 -	Src: Project source code
 -	Run_local_test.bat: local testing script for mileston 1 and 2 (windows)
--	Run_test.bat: testing script for milestone 3 (windows)
+-	Run_distributed_test.bat: testing script for milestone 3 (windows)
 -	output: output file of all test cases
 -	run.sh: testing script (linux)
 -	libs: All dependency libs
--	Docs: Design documents
+-	docs: Design documents
 -	Read.md: Readme file
+-	test: Initial peer state for all tetest cases 
+-	config.txt: Gloabal peer IP/Port address information
+-	compile_linux.sh: Used to complie code on Linux system
+-	run_performance_test.bat: Used only for performance test
+-	info-id1 - info-id6: temporary shared peer data used by local server
