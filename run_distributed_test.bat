@@ -6,7 +6,8 @@ rmdir output /S /Q
 mkdir output
 del config.txt
 
-REM Create security group and EC2 instances
+REM Create key pair, security group, and EC2 instances
+aws ec2 create-key-pair --key-name 677kp
 aws ec2 create-security-group --group-name MyBazaar32144321 --description "SG for 677 lab1"
 aws ec2 authorize-security-group-ingress --group-name MyBazaar32144321 --protocol tcp --port 0-65535 --cidr 0.0.0.0/0
 aws ec2 run-instances --image-id ami-05d7c468e832704bc --instance-type t2.micro --key-name 677kp --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m1}]" > instance.json

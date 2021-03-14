@@ -3,7 +3,7 @@ package roles;
 import utils.Client;
 
 /**
- * Buyer Class extends Person Parent Class
+ * A buyer peer, it implement buy/sell/lookup and inherit all attributes from person class.  
  */
 public class Buyer extends Person {
 
@@ -59,13 +59,4 @@ public class Buyer extends Person {
 	public boolean lookUp(String product, int hopCount) {
 		return false;
 	}
-
-	/**
-	 * method stub
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -1,7 +1,7 @@
 package roles;
 
 /**
- * Seller Class extends Person Parent Class
+ * A seller peer, it implement buy/sell/lookup and inherit all attributes from person class.  
  */
 public class Seller extends Person {
 
@@ -61,13 +61,4 @@ public class Seller extends Person {
 	public boolean lookUp(String product, int hopCount) {
 		return product.equals(this.product);
 	}
-
-	/**
-	 * method stub
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

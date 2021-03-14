@@ -3,7 +3,10 @@ package utils;
 import java.util.concurrent.locks.ReentrantLock;
 
 import roles.Person;
-
+/*
+ * This class defines the specific logic of how to handle each type of message. 
+ * The message handler will create a new message handler thread to process each new request. 
+ */
 public class HandlerThread implements Runnable {
 	/** datagram/data structure for rpc calls **/
 	String msg = "";
@@ -30,9 +33,9 @@ public class HandlerThread implements Runnable {
 		String[] msgTokens = msg.split("\\s+");
 		System.out.println(msg);
 		
-		String personID = msgTokens[msgTokens.length - 1];
-		String msgPath = msgTokens[msgTokens.length - 2];
-		String method = msgTokens[0];
+		String personID = msgTokens[msgTokens.length - 1]; //peerID that the message send to
+		String msgPath = msgTokens[msgTokens.length - 2]; //path of the message
+		String method = msgTokens[0]; //action of the message request
 		System.out.println(String.format("ServerID:%s receive msg:%s with path:%s", personID, msg, msgPath));
 		
 		//Access person information

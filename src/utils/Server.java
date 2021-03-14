@@ -31,7 +31,7 @@ import roles.Person;
 	 * @param id for instance id from config file
 	 */
       public Server(String id) {
- 
+
           try {
         	  this.id = id;
               webServer = new WebServer(port + Integer.parseInt(id));
@@ -39,16 +39,8 @@ import roles.Person;
               XmlRpcServer xmlRpcServer = webServer.getXmlRpcServer();
             
               PropertyHandlerMapping phm = new PropertyHandlerMapping();
-              /* Load handler definitions from a property file.
-               * The property file might look like:
-               *   Calculator=org.apache.xmlrpc.demo.Calculator
-               *   org.apache.xmlrpc.demo.proxy.Adder=org.apache.xmlrpc.demo.proxy.AdderImpl
-               
-              phm.load(Thread.currentThread().getContextClassLoader(),
-                       "MyHandlers.properties");
-              */
-              phm.addHandler("MessageHandler", MessageHandler.class);
-              // phm.addHandler("Adder", AdderImpl.class);
+  
+              phm.addHandler("MessageHandler", MessageHandler.class);//Mapped message handler to MessageHandler class
 
               xmlRpcServer.setHandlerMapping(phm);
             
@@ -56,7 +48,7 @@ import roles.Person;
                   (XmlRpcServerConfigImpl) xmlRpcServer.getConfig();
               serverConfig.setEnabledForExtensions(true);
               serverConfig.setContentLengthOptional(false);
-			  //webServer.start();
+
 		} catch (XmlRpcException e) {
 			e.printStackTrace();
 		}
@@ -95,7 +87,7 @@ import roles.Person;
 	}
 	
 	/* Function:
-	 * Start listening a worker
+	 * Start listening a peer
 	 * Input:
 	 * None
 	 * Output:

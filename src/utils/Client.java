@@ -28,6 +28,7 @@ import evaluation.SystemMonitor;
 	  public Client(String addr) {
 
           try {
+        	//Set client ip/port address
         	XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 			config.setServerURL(new URL(String.format("http://%s/xmlrpc", addr)));
 	        config.setEnabledForExtensions(true);  
@@ -41,13 +42,6 @@ import evaluation.SystemMonitor;
 	            new XmlRpcCommonsTransportFactory(client));
 	        // set configuration
 	        client.setConfig(config);
-
-	        // make the a regular call
-	        /*
-	        Object[] params = new Object[] { " ", " ", " " };
-			Integer ret = (Integer) client.execute("Person.recvMsg", params);
-			System.out.println(ret);
-			*/
 	          
 		  } catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -67,7 +61,8 @@ import evaluation.SystemMonitor;
 			try {
 				res = (Integer) client.execute(method, params);
 			} catch (XmlRpcException e) {
-				e.printStackTrace();
+				//e.printStackTrace();
+				System.out.println("Remote client is not ready yet, retry to connect!");
 			}
 			SystemMonitor.addLatencySample((int)(System.currentTimeMillis() - start));
 			return res;

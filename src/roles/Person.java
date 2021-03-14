@@ -23,6 +23,10 @@ import utils.Client;
 import utils.Logger;
 import utils.Server;
 
+/*A person represent a peer. It's a abstract (Super-class) class of buyers, sellers, 
+ * and peer with no role, define all required attributes and action (lookup/buy/sell) 
+ * each peer must have.
+ */
 public class Person implements LookUp, Reply, Buy {
 	/** different product list for seller and buyer **/
 	static final String[] productList = {"fish", "salt", "boars"};
@@ -97,10 +101,10 @@ public class Person implements LookUp, Reply, Buy {
 		this.type = type;
 		this.logger = new Logger(output);
 		
+		//Initialize all neighbor connector
 		for(String nbr : neighbors) {
 			this.clients.put(nbr, new Client(this.addressLookUp.get(nbr)));
 		}
-		//this.dump();
 	}
 
 	/**
@@ -114,7 +118,7 @@ public class Person implements LookUp, Reply, Buy {
 		String senderId = (msgPath.charAt(msgPath.length() - 1) - '0') + "";
 		--maxHop;
 		
-		if(this.lookUp(product, maxHop)) {
+		if(this.lookUp(product, maxHop)) {//cases where seller has the product and reply to buyer
 			Client c = clients.get(senderId);
 			String buyerID = msgPath.charAt(0) + "";
 			
@@ -125,6 +129,7 @@ public class Person implements LookUp, Reply, Buy {
 			logger.log(String.format("SellerID:%s replied buyerID:%s", this.id, buyerID));
 		}
 		
+		//Peer dosen't have the product the buyer want, simply relay message to neighbors
 		if(maxHop > 0) {
 			for(String cId : clients.keySet()) {
 				if(cId.compareTo(senderId) == 0) continue;
@@ -143,11 +148,11 @@ public class Person implements LookUp, Reply, Buy {
 	public void handleReplyMsg(String buyerID, String sellerID, String msgPath) {
 		
 		
-		if(this.reply(buyerID, sellerID)) {
+		if(this.reply(buyerID, sellerID)) { //case where buyer receive reply from seller and start a p2p connection to buy the product
 			Client c = new Client(addressLookUp.get(sellerID));
 			Integer ret = c.execute("MessageHandler.handleMsg", 
 					new Object[] {String.format("%s %s %s %s", "Buy", sellerID, msgPath + product, sellerID)});
-		} else {
+		} else { //Peer dosen't the target of the reply message, simply relay the reply message to the target buyer
 		
 			int receiverId = msgPath.charAt(msgPath.length() - 2) - '0';
 			Client c = clients.get(Integer.toString(receiverId));
@@ -162,7 +167,7 @@ public class Person implements LookUp, Reply, Buy {
 	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
 	 */
 	public void handleBuyMsg(String sellerId, String msgPath) {
-		if(msgPath.substring(1).equals(product) && buy(sellerId)) {
+		if(msgPath.substring(1).equals(product) && buy(sellerId)) { //case where seller have product and sold to buyer, sending a buy ACK back to buyer to notify that the buyer succeffuly baught the product
 			String senderID = msgPath.charAt(0) + "";
 			Client c = new Client(addressLookUp.get(senderID));
 			Integer ret = c.execute("MessageHandler.handleMsg", 
@@ -184,7 +189,7 @@ public class Person implements LookUp, Reply, Buy {
 	}
 
 	/**
-	 * Dump peer information to disk
+	 * Dump shared peer information to disk
 	 */
 	public void dump() {
 		FileWriter fstream;

@@ -1,7 +1,7 @@
 package utils;
 
 /**
- * MessageHandler for XML-RPC call setup.
+ * The class defines how RPC server handle a message  
  */
 public class MessageHandler {
 

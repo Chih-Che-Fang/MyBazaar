@@ -1,7 +1,7 @@
 package roles;
 
 /**
- * NoRole Class extends Person Parent Class
+ * Peer with no role, it implement buy/sell/lookup and inherit all attributes from person class.
  */
 public class NoRole extends Person {
 

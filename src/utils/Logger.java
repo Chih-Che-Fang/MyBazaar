@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Logger class for printing out logs
+ * Logger class for printing output logs of testing case
  */
 public class Logger {
 	/* output information */
