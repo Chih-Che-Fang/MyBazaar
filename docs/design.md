@@ -15,16 +15,16 @@ If a seller is found, then the seller sends back a response that traverses in th
 
 ## Class Discription  
 **Person:** A person represent a peer. It's a abstract (Super-class) class of buyers, sellers, and peer with no role, define all required attributes and action (lookup/buy/sell) each peer must have.  
-**Buyer:** A buyer peer, it implement buy/sell/lookup and inherite all attributes from person class.  
-**Seller:** A seller peer, it implement buy/sell/lookup and inherite all attributes from person class.  
-**NoRole:** Peer with no role, it implement buy/sell/lookup and inherite all attributes from person class.  
+**Buyer:** A buyer peer, it implement buy/sell/lookup and inherit all attributes from person class.  
+**Seller:** A seller peer, it implement buy/sell/lookup and inherit all attributes from person class.  
+**NoRole:** Peer with no role, it implement buy/sell/lookup and inheritall attributes from person class.  
 **Server:** A server represent the RPC server resides in each peer.  
 **Client:** A client represent the RPC client used to access remote server.    
 **SystemMonitor:** A class used to store and claculate the latency / averge respond time of client requests.  
 **AddressLookUp:** A (neighbor, ip) mapping lookup owned by each peer, allowing a peer to send RPC requests to other peer.  
 **Logger:** A class used to output important output for each test cases. We can therefore veify the correctness of each test case.  
 **MessageHandler:** The class defines how RPC server handle a message  
-**MessageHandlerThread:** The message handler will create a new message handler thread to process each new request. This calss defines the specific logic of how to handle each type of message.  
+**MessageHandlerThread:** The message handler will create a new message handler thread to process each new request. This class defines the specific logic of how to handle each type of message.  
 
 
 ## Interface Discription:  
