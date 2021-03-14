@@ -83,7 +83,7 @@ for /f "tokens=*" %%a in (ips.txt) do (
 TIMEOUT 2
 
 
-run test case 2: Test latency and averge repponse time when 3 neighbor
+REM run test case 2: Test latency and averge repponse time when 3 neighbor
 echo b 0 fish 1 1 test2> info-id-0
 echo s 1 fish 0,2,3 1 test2> info-id-1
 echo b 2 fish 1 1 test2> info-id-2

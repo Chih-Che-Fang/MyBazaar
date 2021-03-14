@@ -39,8 +39,8 @@ public class HandlerThread implements Runnable {
 		System.out.println(String.format("ServerID:%s receive msg:%s with path:%s", personID, msg, msgPath));
 		
 		//Access person information
+		lock.lock();
 		Person p = Person.accessPerson(personID);
-		
 		switch(method) {
 			case "LookUp":
 				p.handleLookUpMsg(msgTokens[1], Integer.valueOf(msgTokens[2]), msgPath);
@@ -49,12 +49,11 @@ public class HandlerThread implements Runnable {
 				p.handleReplyMsg(msgTokens[1], msgTokens[2], msgPath);
 				break;
 			case "Buy":
-				lock.lock();
 				p.handleBuyMsg(msgTokens[1], msgPath);
 				p.dump();
-				lock.unlock();
 				break;
 		}
+		lock.unlock();
 	}
 
 	/**

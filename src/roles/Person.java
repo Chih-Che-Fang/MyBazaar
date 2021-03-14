@@ -29,7 +29,7 @@ import utils.Server;
  */
 public class Person implements LookUp, Reply, Buy {
 	/** different product list for seller and buyer **/
-	static final String[] productList = {"fish", "salt", "boars"};
+	static final String[] productList = {"fish", "salt"/*, "boars"*/};
 	/** different roles for person */
 	static final String[] roleList = {"b", "s"};
 	/** roles type for Person 1:buyer 0:seller **/
@@ -167,6 +167,7 @@ public class Person implements LookUp, Reply, Buy {
 	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
 	 */
 	public void handleBuyMsg(String sellerId, String msgPath) {
+		System.out.println(product);
 		if(msgPath.substring(1).equals(product) && buy(sellerId)) { //case where seller have product and sold to buyer, sending a buy ACK back to buyer to notify that the buyer succeffuly baught the product
 			String senderID = msgPath.charAt(0) + "";
 			Client c = new Client(addressLookUp.get(senderID));
