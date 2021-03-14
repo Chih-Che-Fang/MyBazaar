@@ -35,6 +35,7 @@ If a seller is found, then the seller sends back a response that traverses in th
 ## Sequence Diagram
 ![WorkFlow diagram](./WorkFlow.PNG "WorkFlow")
 
+Notice that seller will send a buy ack back to buyer if the buyer successfully baught the product. We add buy ack to handle with race conditon that seller might reply to multiple buyers but only one buyer can buy the product, which means buy reqeust doesn't necessarily succeed each time. We must let the buyer if they successfuly baught the product or not.  
 
 # How it Works
  ## Bootstraping & Communication
