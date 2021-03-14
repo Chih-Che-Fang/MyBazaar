@@ -109,7 +109,7 @@ We terminate all EC2 instances and delete security group created in previous in 
 **Test1 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
 **Test2 (Milestone1):** Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
 **Test3 (Milestone1):** Randomly assign buyer and seller roles. Ensure that items keep being sold throughout  
-**Test4 (Milestone2):** One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever. **(This case also simulate race condition)**  
+**Test4 (Milestone2, Simulation of Race Condition):** One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever. **(This case also simulate race condition)**  
 **Test5 (Milestone3):** Run test1~test4 again, but deploy peers on different AWS EC2 instances.  
 
 ## Automatic Test Scripts
