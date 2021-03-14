@@ -51,12 +51,24 @@ Format = [Action arg1 (arg2) msgPath sentTo]
 **msgPath:** The path of the message, used by reply message to traverse original route back to the buyer.  
 **sentTo:** Indicate what peer the message is sending to. The information is used by RPC server to deliever this request to the right peer.  
 
+Here is one example of RPC message that sellerID 1 sent a reply message back to buyerID 0 along with path 0-1:
+[Reply 1 0 1 01 0 ]
+
 ## Global IP/Port Address Configuration
 To allow peers to communicate with each other, we need to give them other peer's address and port, we use a file - config.txt to ecord the information.
 Format = [PeerID, IPAddress:Port]  
 
-**PeerID:** ID of the peer
+**PeerID:** ID of the peer  
 **IPAddress:Port:** The peer's ipv4 address and listening port  
+
+Here is one example of configt file:  
+0,127.0.0.1:8080  
+1,127.0.0.1:8081  
+2,127.0.0.1:8082  
+3,127.0.0.1:8083  
+4,127.0.0.1:8084  
+4,127.0.0.1:8085  
+
 
 
 ## Concurency / Race Condition Protection
@@ -72,6 +84,9 @@ Format = [type peerID Product NeighborID Count TestName]
 **NeighborID:** Indicate all peer IDs that are neighbored to the peer. Neighbor ID is split by ",".  
 **Count:** Number of product left to sell.  
 **TestName:** Indicate the test name where the peer belongs to. It is used to mark what test the output log belongs to.  
+
+Here is one example of shared peer information that a buyer want to buy fish and is neighbored with peer 2 & 3:
+[b 1 fish 2,3 0 test1]
 
 ## Automatic Multiple Server Deployment
 ### Dynamic server ceation
@@ -99,7 +114,20 @@ We terminate all EC2 instances and delete security group created in previous in 
 
 ## Automatic Test Scripts
 **run_local_test.bat:** This script will atomatically compile the code and perform test 1 ~ test 4 in order on local machine. Finally store output under output foler for validation.  
+
 **run_distributed_test.bat:**  This script will atomatically create Amazon EC2 instances, migrating & compling the code and config file to remote servers, deploying peers on remote server, perform test 1 ~ test 4 in order on remote EC2 instances. Finally store output under output foler for validation and relase all cloud reources. For more detail please see the chapter, "How it Works/Automatic Multiple Server Deployment".  
+
+## Test Output (Log)
+We store all testing output under output folder and use them to validate the correctness of each test case. For local testing, each file is named with testID.out (Ex. test4.out). It will print all peers' log on that machine, like which buyer baught a product or which seller sold a product. For distributed testing on different server, we store all remote server's output under output/ipaddress (Ex.output/127.35.6.1). In this way, we know which test and machine this log/output belongs to and easy to debug. Here is one output example of test1:  
+
+SellerID:1 start to sell fish  
+BuyerID:0 start to buy fish  
+SellerID:1 start to sell fish  
+BuyerID:0 bought fish from 1  
+BuyerID:0 start to buy fish  
+SellerID:1 start to sell boars  
+BuyerID:0 bought fish from 1  
+BuyerID:0 start to buy fish  
 
 
 # Evaluation and Measurements
