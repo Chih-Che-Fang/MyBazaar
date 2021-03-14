@@ -13,7 +13,7 @@ test1:Assign one peer to be a buyer of fish and another to be a seller of fish. 
 test2:Assign one peer to be a buyer of fish and another to be a seller of boar. Ensure that nothing is sold.  
 test3:Randomly assign buyer and seller roles. Ensure that items keep being sold throughout.  
 **[Milestone2]**
-test4 (Race condition included):One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever.
+test4 (Race condition included):One seller of boar, 3 buyers of boars, the remaining peers have no role. Fix the neighborhood structure so that buyers and sellers are 2-hop away in the peer-to-peer overlay network. Ensure that all items are sold and restocked and that all buyers can buy forever.  
 **[Milestone3]**  
 test 5:Use run_distributed_test.bat to run and deploy test1 ~ test4 on different servers.
 
