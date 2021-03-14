@@ -119,6 +119,56 @@ Results show averged response time are almost the same (only slight increase) as
 
 
 # Design Tradeoffs
+**RPC/RMI Call V.S RPC Call**  
+We must choose one of way for communication among peers. The pros of RPC/RMI is:    
+1. Allow user to define communicate interface, more human-readable and concise  
+2. Don't need to worry about low-level newtorking commucaiton implmentation  
+3. Remove the complexity of low-level newtorking commucaiton implmentation  
+
+The cons of RPC/RMI:  
+1. Recuced flexibility on low-leve networking implementation and commication interface  
+
+We finally choose to use RPC as our peer communication since we want to hide the complexity of lowe-lever networking commucation, making the system more simple, concise, and easy to debug. Also, this assignment doesn't require us to implement deiffcult connection falut tolerance or mechanism, we don't need socket for flexbility.  
+
+**Syncronous RPC Call V.S Asyncrounous RPC Call**  
+The pros of using Syncronous RPC is:
+1. Don't need to worry about concurrcency issues caused by multi-thread  
+2. Lower complexity of system design. 
+The cons of Syncronous RPC is:  
+1. Impaired performance (throughput) if multiple rqeuest happens concurrently.  
+2. Higher latency 
+
+We finally chose Asyncrounous RPC Call since we want better performance(throughput) and shorter respond time of message processing. We used lock and shared data to overcome the concurrent issue caused by multi-thread.  
+
+**Thread Pool V.S Dynamically Creating New Thread**  
+To handle client RPC request, we can choose either lauch new thread every time or use existing thread pool to allocate thread to message processing task. The pros of Thread Pool is:  
+1.Shorter respond time of client request since we don't need to create new thread dynamically  
+The cons is:  
+1. Higher complexity of system since we need to handle the creation and recyle of threads  
+2. Higher memeory usage since we must maintain certain amount of thread  
+3. Hard to debug  
+
+We finally choose Dynamically Creating New Thread since the message handler thread dosen't have too much data attribute and creating is fast. Given that performance doesn't have too much difference and we want to simplify our design, we can dynamically creating new thread to handle RPC client request.
+
+**Dynamic Creation of EC2 Instances V.S Hot Stand-By EC2 Instances**  
+When launching multiple server for peer delpyment, we must choose between whether to dynamically creaing new instances or deploy peers on hot stand-by servers. The pros of dynamic creation of EC2 Instances is:  
+1. Lower cost of AWS EC2 instance (EC2 bills by running time of instances)  
+The cons of hot stand-by EC2 instance is:  
+1. Longer delpoyment time since we need to wait for instances to be created  
+2. Need to re-migrate and compile code every time we update our code  
+
+We finally chose Dynamic Creation of EC2 Instances since cost is significat if we maintain a lot of running EC2 instances. We write a script to quickly creating security group and instances when deploying.  
+
+
+**Open All TCP Port between Different Remote Server V.S Open only certain range of TCP Port between Different Remote Server**
+To allow RPC access permission bewtween different servers so that peer can communicate with each other. We attached Amazon security group to each Amazon EC2 instances to implement this permission control. The pros of opening all TCP Port between Different Remote Serve is:  
+1. Don't need to worry about port range change (Ex. Add/Deletion) as we may want to add new port to a peer  
+2. Easy to configure  
+The cons is:  
+1.  Impaired security since if one of server ismalicious, it can exoloit and attack the opened port  
+
+We finally chose to open only certain range of TCP port bewteen Different Remote Server. We use script to automcaitally create sercurity group to save the effort of chaning port in the future.
+
 
 # How to Run It
 
