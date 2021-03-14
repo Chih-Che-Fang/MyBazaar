@@ -121,6 +121,8 @@ public class Person implements LookUp, Reply, Buy {
 			c.execute("MessageHandler.handleMsg", 
 					new Object[] {String.format("%s %s %s %s %s", "Reply", 
 							buyerID, this.id, msgPath, msgPath.charAt(msgPath.length() - 1) + "")});
+			
+			logger.log(String.format("SellerID:%s replied buyerID:%s", this.id, buyerID));
 		}
 		
 		if(maxHop > 0) {
@@ -264,6 +266,7 @@ public class Person implements LookUp, Reply, Buy {
 		Server server = new Server(args[0]);
 		server.start();
 		p.logStatus();
+		p.dump();
 		
 		//Buyer continue sending lookup msg
 		if(p.type.equals("b")){
@@ -272,7 +275,7 @@ public class Person implements LookUp, Reply, Buy {
 
 				//Add duration for next lookup message
 				try {
-					Thread.sleep(200);
+					Thread.sleep(3000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

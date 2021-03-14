@@ -1,0 +1,22 @@
+BuyerID:2 start to buy boars
+BuyerID:0 start to buy boars
+SellerID:1 start to sell boars
+PeerID:5 with no role start to work
+PeerID:4 with no role start to work
+BuyerID:3 start to buy boars
+SellerID:1 replied buyerID:0
+SellerID:1 replied buyerID:3
+SellerID:1 replied buyerID:2
+SellerID:1 start to sell boars
+BuyerID:3 bought boars from 1
+SellerID:1 start to sell fish
+BuyerID:3 start to buy boars
+BuyerID:2 bought boars from 1
+BuyerID:2 start to buy salt
+SellerID:1 start to sell salt
+BuyerID:0 bought boars from 1
+BuyerID:0 start to buy boars
+SellerID:1 replied buyerID:2
+SellerID:1 start to sell salt
+BuyerID:2 bought salt from 1
+BuyerID:2 start to buy fish
