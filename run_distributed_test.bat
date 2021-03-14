@@ -1,3 +1,4 @@
+REM Complie code
 dir /s /B src\*.java > sources.txt
 dir /s /B libs\*.jar > libs.txt
 javac -cp ".\libs\*" -d bin -s bin -h bin @sources.txt
@@ -39,7 +40,7 @@ for /f "tokens=*" %%a in (ips.txt) do (
 REM Migrate latest code and complie code
 for /f "tokens=*" %%a in (ips.txt) do (
 	ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "rm -rf MyBazaar"
-	scp -o "StrictHostKeyChecking no" -i 677kp.pem -r C:\Users\user\677-project1\MyBazaar  ec2-user@%%a:~/MyBazaar
+	scp -o "StrictHostKeyChecking no" -i 677kp.pem -r %cd%  ec2-user@%%a:~/MyBazaar
 	ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "cd ~/MyBazaar;sh compile_linux.sh"
 )
 
@@ -165,8 +166,14 @@ for /f "tokens=*" %%a in (ips.txt) do (
   scp -i 677kp.pem -r ec2-user@%%a:~/MyBazaar/output/*.out output\%%a\
 )
 
+REM release AWS resources
 aws ec2 delete-security-group --group-name MyBazaar32144321
 for /f "tokens=*" %%a in (ids.txt) do (
   aws ec2 terminate-instances --instance-ids %%a
 )
+
+del instance.json
+del ids.txt
+del ips.txt
+ 
 pause
