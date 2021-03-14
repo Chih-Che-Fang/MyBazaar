@@ -129,7 +129,7 @@ SellerID:1 start to sell boars
 BuyerID:0 bought fish from 1  
 BuyerID:0 start to buy fish  
 
-## Verification of all test cases  
+## Verification of All Test Cases  
 **Test1 output:** 
 BuyerID:0 start to buy fish  
 SellerID:1 start to sell fish  
@@ -145,16 +145,30 @@ SellerID:1 start to sell boars
 
 
 **Test3 output:** 
-BuyerID:0 start to buy fish  
-SellerID:1 start to sell boars  
+BuyerID:0 start to buy boars  
+BuyerID:1 start to buy salt  
 **Result:** Pass, buyer 1 buy nothing, seller 1 sells nothing  
 
 
 **Test4 output:** 
-BuyerID:0 start to buy fish  
-SellerID:1 start to sell boars  
-**Result:** Pass, buyer 1 buy nothing, seller 1 sells nothing  
-
+SellerID:1 start to sell boars
+PeerID:5 with no role start to work
+BuyerID:2 start to buy boars
+BuyerID:0 start to buy boars
+BuyerID:3 start to buy boars
+PeerID:4 with no role start to work
+SellerID:1 replied buyerID:0
+SellerID:1 replied buyerID:2
+SellerID:1 replied buyerID:3
+SellerID:1 start to sell boars
+SellerID:1 start to sell fish
+BuyerID:2 bought boars from 1
+BuyerID:2 start to buy fish
+SellerID:1 replied buyerID:2
+SellerID:1 start to sell salt
+BuyerID:2 bought fish from 1
+BuyerID:2 start to buy fish
+**Result:** Pass, buyer 0,2,3 want to buy boars from seller 1, and seller 1 also replied all of them (race condition), only buyer 2 baught boars from seller 1 successfully
 
 # Evaluation and Measurements
 ## 1.	Compare the latencies to process a RPC call between peers on different servers, as well as latencies between peers on your local machine(s)  
