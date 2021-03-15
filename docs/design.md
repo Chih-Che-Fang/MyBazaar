@@ -280,5 +280,4 @@ See [README.md #How to run?](https://github.com/Chih-Che-Fang/MyBazaar#how-to-ru
 # Possible Improvements and Extensions
 
 1. We assume the id of hosts has to be ascending sequence, otherwise it will cause errors.
-2. The MaxHopCount currently is hardcoded, we could customize this number in the future for buyers.
-3. We are using the thread per request model currently we could be optimized by using thread pool or even coroutine.
+2. We are using the thread per request model currently we could be optimized by using thread pool or even coroutine.
