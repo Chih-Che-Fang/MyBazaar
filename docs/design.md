@@ -67,8 +67,7 @@ Here is one example of configt file:
 1,127.0.0.1:8081  
 2,127.0.0.1:8082  
 3,127.0.0.1:8083  
-4,127.0.0.1:8084  
-4,127.0.0.1:8085  
+4,127.0.0.1:8084   
 
 
 
@@ -258,7 +257,7 @@ The cons of hot stand-by EC2 instance is:
 We finally chose Dynamic Creation of EC2 Instances since cost is significat if we maintain a lot of running EC2 instances. We write a script to quickly creating security group and instances when deploying.  
 
 
-**Open All TCP Port between Different Remote Server V.S Open only certain range of TCP Port between Different Remote Server**
+**Open All TCP Port between Different Remote Server V.S Open only certain range of TCP Port between Different Remote Server**  
 To allow RPC access permission bewtween different servers so that peer can communicate with each other. We attached Amazon security group to each Amazon EC2 instances to implement this permission control. The pros of opening all TCP Port between Different Remote Serve is:  
 1. Don't need to worry about port range change (Ex. Add/Deletion) as we may want to add new port to a peer  
 2. Easy to configure  
