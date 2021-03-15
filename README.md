@@ -24,7 +24,7 @@ test 5:Use run_distributed_test.bat to run and deploy test1 ~ test4 on different
 2. **[If Single Server]** Perform **run_local_test.bat** on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
 **[If Multiple Server]** Perform **run_distributed_test.bat** on Windows OS (With JDK installed, JDK environment variable set, AWS Cli set and configured, must have access to your own AWS account), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
 
-3. See the testing result on console, it will tell you if the buyer bought the products or not. For every test case, it will jump two console windows, one represent buyer process and another represent seller process, they will individually print logs like:  
+3. See the testing result on console, it will tell you if the buyer bought the products or not. For every test case, it will jump out multiple console windows, they represent a buyer peer, seller peer, or a peer with no role. They will individually print logs like:  
 
 Output info to loc:info-id-0  
 ServerId:0 start!!  
@@ -35,7 +35,7 @@ BuyerID:0 bought fish from 1
 BuyerID:0 start to buy boars  
 Output info to loc:info-id-0  
 
-4.To verify the correctness, check the log output of test1.out ~ test4.out under output folder  
+4.To verify the correctness, check the log output of test1.out ~ test4.out under "output" folder  
 
 
 # Directory/Files Description
