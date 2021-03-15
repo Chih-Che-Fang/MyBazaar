@@ -4,8 +4,8 @@ Authors: Chih-Che Fang, Shivam Srivastava, Shiyang Wang
 
 # Problem description
 
-This project is a simple distributed program implement a peer-to-peer market, The bazaar contains two types of people (i.e., computing nodes): buyers and sellers. Each seller sells one of the following goods: fish, salt, or boars. Each buyer in the bazaar is looking to buy one of these three items.
-Buyers find sellers by announcing what they wish to buy or sell. All  announcements must follow the peer-to-peer model. Each buyer shall communicate their needs to all her neighbors, who will then propagate the message to their neighbors and so on, until a seller is found or the maximum limit on the number of hops a message can traverse is reached.
+This project is a simple distributed program that implements a peer-to-peer market, The bazaar contains two types of people (i.e., computing nodes): buyers and sellers. Each seller sells one of the following goods: fish, salt, or boars. Each buyer in the bazaar is looking to buy one of these three items.
+Buyers find sellers by announcing what they wish to buy or sell. All announcements must follow the peer-to-peer model. Each buyer shall communicate their needs to all her neighbors, who will then propagate the message to their neighbors and so on, until a seller is found or the maximum limit on the number of hops a message can traverse is reached.
 If a seller is found, then the seller sends back a response that traverses in the reverse direction back to the buyer. At this point, the buyer and the seller directly enter into a transaction (without using intermediate peers).
 
 # System Design
@@ -210,7 +210,7 @@ Avg Response Time (1 neighbor) | Avg Response Time (3 neighbor) |  Avg Response 
 5.1327ms | 5.12ms | 5.26ms  |  5.28ms
 
 PS: all response time sampled from 1000 requests
-PS: We defines response time as the time the client receive response from remote servers, the time doesn't imply the message is being processed since we use asyncrounous RPC call design, the server will launch a new thread whenever it receive a request from client, sending message to background processing, and respond to client immediately.  
+PS: We defines response time as the time the client receives responses from remote servers, the time doesn't imply the message is being processed since we use asynchronous RPC call design, the server will launch a new thread whenever it receives a request from client, sending message to background processing, and respond to client immediately.  
 
 Results show averged response time are almost the same (only slight increase) as more multiple clients are making requests to a peer. It matches what we expected since our system design will lauch a new thread whenever receive a client requests. The response time shouldn't be affacted by the number of concurrent request since the server respond to clients as soon as it receive the request. However, we still see a little increase in avergage response time, I think it might be affacted by the time used to launch new thread. As more request recive concurrently, the server spends some time launching new thread, which cause the slight difference.  
 
