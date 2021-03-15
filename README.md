@@ -6,7 +6,7 @@
 
 *I Aggree to share this source code with my group members
 
-**Enviornment:**  Windows + Java SDK 8 Installed  + AWS Cli2.0 installed + AWS cli configured with your own AWS account  
+**Enviornment:**  Windows + Java SDK 8 Installed  + AWS Cli2.0 installed + AWS cli configured with your own AWS account **(Please make sure you're able to access your AWS account by AWS CLI)**  
 **Applications:**   
 **[Milestone1]**  
 test1:Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
@@ -21,10 +21,10 @@ test 5:Use run_distributed_test.bat to run and deploy test1 ~ test4 on different
 
 1. Switch to the root directory of this project (Ex. cd /MyBazaar) and confirm the path contains no "blank"  
 
-2. **[If Single Server]** Perform **run_local_test.bat** on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
-**[If Multiple Server]** Perform **run_distributed_test.bat** on Windows OS (With JDK installed, JDK environment variable set, AWS Cli set and configured, must have access to your own AWS account), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
+2. **[Test on Single Local Server]** Perform **run_local_test.bat** on Windows OS (With JDK installed and with JDK environment variable set), and will automatically launch multiple peers and construct the topology, finally run the peer-to-peer system  
+**[Test on Multiple Remote Servers(EC2)]** Perform **run_distributed_test.bat** on Windows OS (With JDK installed, JDK environment variable set, AWS Cli set and configured, must have access to your own AWS account), and will automatically careat security group, key pair, and multiple EC2 instances, then migrate the code to remote server and complie it, finally run the peer-to-peer system for test1 to test4
 
-3. See the testing result on console, it will tell you if the buyer bought the products or not. For every test case, it will jump two console windows, one represent buyer process and another represent seller process, they will individually print logs like:  
+3. See the testing result on console, it will tell you if the buyer bought the products or not. For every test case, it will jump out multiple console windows, they represent a buyer peer, seller peer, or a peer with no role. They will individually print logs like:  
 
 Output info to loc:info-id-0  
 ServerId:0 start!!  
@@ -35,7 +35,9 @@ BuyerID:0 bought fish from 1
 BuyerID:0 start to buy boars  
 Output info to loc:info-id-0  
 
-4.To verify the correctness, check the log output of test1.out ~ test4.out under output folder  
+Fianlly, the distributed system will output all testing log to "output" folder
+
+4.To verify the correctness, check the log output of test1.out ~ test4.out under "output" folder  
 
 
 # Directory/Files Description
