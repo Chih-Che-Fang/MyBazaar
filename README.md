@@ -6,7 +6,7 @@
 
 *I Aggree to share this source code with my group members
 
-**Enviornment:**  Windows + Java SDK 8 Installed  + AWS Cli2.0 installed + AWS cli configured with your own AWS account  
+**Enviornment:**  Windows + Java SDK 8 Installed  + AWS Cli2.0 installed + AWS cli configured with your own AWS account **(Please make sure you're able to access your AWS account by AWS CLI)**  
 **Applications:**   
 **[Milestone1]**  
 test1:Assign one peer to be a buyer of fish and another to be a seller of fish. Ensure that all fish is sold and restocked forever.  
