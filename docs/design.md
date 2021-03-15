@@ -89,6 +89,9 @@ Here is one example of shared peer information that a buyer wants to buy fish an
 [b 1 fish 2,3 0 test1]
 
 ## Automatic Multiple Server Deployment
+### Pre-created AMI image  
+We already create a Amazon Linux2 AMI image with JDK 8 installed and made it public to access, later we can create new EC2 instances from the image, it provides us a machine that is able to compile the code and run the system  
+
 ### Dynamic server creation
 We have pr-created Amazon AMI image that has Java SDK 8 installed. We dynamically create a security group that allows RPC access permission. We create an EC2 instance from the pre-created AMI image and attached it with the created security group. We tag each EC2 instance with a tag MyBazaar32144321" so that we can later access them and release them.
 
