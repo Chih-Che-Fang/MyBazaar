@@ -6,7 +6,8 @@ package utils;
 public class MessageHandler {
 
 	/**
-	 * @param msg information pass by rpc call.
+	 * RPC message handler constructor and initalization, will launch new thread for each new RPC request
+	 * @param msg information pass by RPC call.
 	 * @return
 	 */
 	public Integer handleMsg(String msg) {

@@ -8,6 +8,7 @@ public class Seller extends Person {
 	static final int m = 1;
 
 	/**
+	 * Seller constructor and initialization
 	 * @param type  Buyer(b) or Seller(s) or NoRole(na).
 	 * @param id id of a seller.
 	 * @param product product string buy or sell (salt, boar, fish).
@@ -20,7 +21,7 @@ public class Seller extends Person {
 	}
 
 	/**
-	 * logStatus for logging.
+	 * log status to testing output file  
 	 */
 	@Override
 	public void logStatus() {
@@ -28,6 +29,7 @@ public class Seller extends Person {
 	}
 
 	/**
+	 * Implement buy interface for the seller
 	 * @param sellerID
 	 * @return
 	 */
@@ -43,6 +45,7 @@ public class Seller extends Person {
 	}
 
 	/**
+	 * Implement reply interface for the seller
 	 * @param buyerID buyerID seller reply to.
 	 * @param sellerID SellerId
 	 * @return always false since seller do not response to another seller's reply msg.
@@ -53,6 +56,7 @@ public class Seller extends Person {
 	}
 
 	/**
+	 * Implement lookup interface for the seller
 	 * @param product seller check if product match.
 	 * @param hopCount hopCount
 	 * @return return true if product match, false if not.

@@ -29,7 +29,7 @@ import utils.Server;
  */
 public class Person implements LookUp, Reply, Buy {
 	/** different product list for seller and buyer **/
-	static final String[] productList = {"fish", "salt"/*, "boars"*/};
+	static final String[] productList = {"fish", "salt", "boars"};
 	/** different roles for person */
 	static final String[] roleList = {"b", "s"};
 	/** roles type for Person 1:buyer 0:seller **/
@@ -84,7 +84,8 @@ public class Person implements LookUp, Reply, Buy {
 		}
 	}
 
-	/**
+	/** 
+	 * Peer constructor and initialization
 	 * @param type  Buyer(b) or Seller(s) or NoRole(na).
 	 * @param id id of a person.
 	 * @param product product string buy or sell (salt, boar, fish).
@@ -108,7 +109,7 @@ public class Person implements LookUp, Reply, Buy {
 	}
 
 	/**
-	 * Message handlers, will call implemented function interfaces: lookup, buy, or reply
+	 * Handle lookup message from neighbors
 	 * @param product the specific product buyer looking for
 	 * @param maxHop  the maxHop of the message, decrease by one every time pass through neighbors
 	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
@@ -118,7 +119,7 @@ public class Person implements LookUp, Reply, Buy {
 		String senderId = (msgPath.charAt(msgPath.length() - 1) - '0') + "";
 		--maxHop;
 		
-		if(this.lookUp(product, maxHop)) {//cases where seller has the product and reply to buyer
+		if(this.lookUp(product, maxHop)) {//handle cases where seller has the product and reply to buyer
 			Client c = clients.get(senderId);
 			String buyerID = msgPath.charAt(0) + "";
 			
@@ -141,6 +142,7 @@ public class Person implements LookUp, Reply, Buy {
 	}
 
 	/**
+	 * Handle reply message from neighbors
 	 * @param buyerID  id of the buyer
 	 * @param sellerID sellerId is the id of origin seller of the message
 	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
@@ -148,7 +150,7 @@ public class Person implements LookUp, Reply, Buy {
 	public void handleReplyMsg(String buyerID, String sellerID, String msgPath) {
 		
 		
-		if(this.reply(buyerID, sellerID)) { //case where buyer receive reply from seller and start a p2p connection to buy the product
+		if(this.reply(buyerID, sellerID)) { //handle case where buyer receive reply from seller and start a p2p connection to buy the product
 			Client c = new Client(addressLookUp.get(sellerID));
 			Integer ret = c.execute("MessageHandler.handleMsg", 
 					new Object[] {String.format("%s %s %s %s", "Buy", sellerID, msgPath + product, sellerID)});
@@ -163,11 +165,11 @@ public class Person implements LookUp, Reply, Buy {
 	}
 
 	/**
+	 * Handle buy message from neighbors
 	 * @param sellerId sellerId is the id of origin seller of the message
 	 * @param msgPath msgPath is the information to track the propagation path from sender to receiver
 	 */
 	public void handleBuyMsg(String sellerId, String msgPath) {
-		System.out.println(product);
 		if(msgPath.substring(1).equals(product) && buy(sellerId)) { //case where seller have product and sold to buyer, sending a buy ACK back to buyer to notify that the buyer succeffuly baught the product
 			String senderID = msgPath.charAt(0) + "";
 			Client c = new Client(addressLookUp.get(senderID));
@@ -177,6 +179,7 @@ public class Person implements LookUp, Reply, Buy {
 	}
 
 	/**
+	 * Get all peer's neighbors 
 	 * @return return neighbors of peers in a string formats
 	 */
 	//Return neighbors of the peer
@@ -212,7 +215,7 @@ public class Person implements LookUp, Reply, Buy {
 	}
 
 	/**
-	 * Read info config file to init different Roles (Buyer,Seller,NoRole)
+	 * Read peer information file to init different Roles (Buyer, Seller, NoRole)
 	 * @param id extract from info-id-%s config file
 	 * @return Child Class one of (Buyer,Seller,NoRole) from Person Parent Class.
 	 */
@@ -229,7 +232,6 @@ public class Person implements LookUp, Reply, Buy {
 			FileInputStream fInputStream = new FileInputStream(personFile);
 			FileChannel inputChannel = fInputStream.getChannel();
 
-			//BufferedReader reader = new BufferedReader(new FileReader(personFile));
 			BufferedReader reader = new BufferedReader(new InputStreamReader(fInputStream));
 			String line = reader.readLine();
 			
@@ -246,13 +248,13 @@ public class Person implements LookUp, Reply, Buy {
 		String type = personInfo[0].equals("na")? Person.roleList[r.nextInt(roleList.length)] : personInfo[0];
 		Person p = null;
 		switch(type) {
-		case "b":
+		case "b"://peer is a buyer
 			p = new Buyer(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4]), personInfo[5]);
 			break;
-		case "s":
+		case "s"://peer is a seller
 			p = new Seller(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4]), personInfo[5]);
 			break;
-		case "n":
+		case "n"://peer has no role
 			p = new NoRole(type, personInfo[1], personInfo[2], personInfo[3].split(","), Integer.valueOf(personInfo[4]), personInfo[5]);
 			break;
 		}
@@ -262,11 +264,11 @@ public class Person implements LookUp, Reply, Buy {
 
 
 	/**
-	 * program main entry
+	 * Peer's bootstrapping entry point
 	 */
 	public static void main(String[] args) {
 		
-		//Start server and message handler
+		//Start server and message handler, start listening to neighbors' message
 		String id = args[0];
 		Person p = accessPerson(id);
 		Server server = new Server(args[0]);

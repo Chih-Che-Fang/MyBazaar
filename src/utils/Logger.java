@@ -11,11 +11,16 @@ public class Logger {
 	/* output information */
 	public String output = "";
 	
+	/*
+	 * Logger constructor and initialization
+	 * @param output file name
+	 */
 	public Logger(String output) {
 		this.output = output;
 	}
 
 	/**
+	 * Write testing log to output file for validation purpose
 	 * @param msg logging out message output
 	 */
 	public void log(String msg) {
@@ -24,6 +29,7 @@ public class Logger {
 		FileWriter fstream;
 		BufferedWriter out;
  		
+		//Write peer message to output file
 		try {
 			String outFile = String.format("output//%s.out", output);
 			fstream =  new FileWriter(outFile, true);

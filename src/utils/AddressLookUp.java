@@ -16,7 +16,8 @@ public class AddressLookUp {
 
 
 	/**
-	 * @param config config file read from 'config.txt'.
+	 * Address lookup constructor
+	 * @param config config file read from 'config.txt' that include all peer's ip address information
 	 */
 	public AddressLookUp(String config) {
 
@@ -24,8 +25,7 @@ public class AddressLookUp {
 			BufferedReader reader = new BufferedReader(new FileReader(config));
 			String line = reader.readLine();
 			while (line != null) {
-				address.add(line.split(",")[1]);
-				//System.out.println(line);
+				address.add(line.split(",")[1]);//record address for the peer
 				line = reader.readLine();
 			}
 			reader.close();
@@ -35,6 +35,7 @@ public class AddressLookUp {
 	}
 
 	/**
+	 * Get peer's ip/port address
 	 * @param id get the neighbor information by id.
 	 * @return return string of the neighbor/client information.
 	 */

@@ -42,13 +42,13 @@ public class HandlerThread implements Runnable {
 		lock.lock();
 		Person p = Person.accessPerson(personID);
 		switch(method) {
-			case "LookUp":
+			case "LookUp"://handle a lookup message
 				p.handleLookUpMsg(msgTokens[1], Integer.valueOf(msgTokens[2]), msgPath);
 				break;
-			case "Reply":
+			case "Reply"://handle a rpc message
 				p.handleReplyMsg(msgTokens[1], msgTokens[2], msgPath);
 				break;
-			case "Buy":
+			case "Buy": //handle a buy message
 				p.handleBuyMsg(msgTokens[1], msgPath);
 				p.dump();
 				break;
@@ -57,7 +57,7 @@ public class HandlerThread implements Runnable {
 	}
 
 	/**
-	 * Join the listener thread
+	 * Join the handler thread
 	 * @return -1 if thread is None.
 	 */
 	public int join() {
@@ -73,7 +73,7 @@ public class HandlerThread implements Runnable {
 	}
 
 	/**
-	 * Start listening a worker.
+	 * Start listening a peer.
 	 */
 	public void start() {
 		t = new Thread (this);

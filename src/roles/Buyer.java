@@ -8,7 +8,7 @@ import utils.Client;
 public class Buyer extends Person {
 
 	/**
-	 * Buyer Constructor
+	 * Buyer constructor and initialization
 	 * @param type  Buyer(b) or Seller(s) or NoRole(na).
 	 * @param id id of a buyer.
 	 * @param product product string buy or sell (salt, boar, fish).
@@ -21,7 +21,7 @@ public class Buyer extends Person {
 	}
 
 	/**
-	 * logStatus to printout information
+	 * log status to testing output file  
 	 */
 	@Override
 	public void logStatus() {
@@ -29,6 +29,7 @@ public class Buyer extends Person {
 	}
 
 	/**
+	 * Implement buy interface for the buyer
 	 * @param sellerID seller ID that buyer check.
 	 * @return return false since buyer just relay buy msg.
 	 */
@@ -41,6 +42,7 @@ public class Buyer extends Person {
 	}
 
 	/**
+	 * Implement reply interface for the buyer
 	 * @param buyerID
 	 * @param sellerID
 	 * @return buyer ID match the current Id respond to this reply msg.
@@ -51,6 +53,7 @@ public class Buyer extends Person {
 	}
 
 	/**
+	 * Implement lookup interface for the buyer
 	 * @param product
 	 * @param hopCount
 	 * @return false since Buyer doesn't respond to lookUp.

@@ -6,6 +6,7 @@ package roles;
 public class NoRole extends Person {
 
 	/**
+	 * A No-Role peer's constructor and initialization
 	 * @param type  Buyer(b) or Seller(s) or NoRole(na).
 	 * @param id id of a NoRole.
 	 * @param product product string buy or sell (no meaning for NoRole).
@@ -27,6 +28,7 @@ public class NoRole extends Person {
 	}
 
 	/**
+	 * Implement buy interface
 	 * @param sellerID for NoRole.
 	 * @return always false since NoRole can not buy.
 	 */
@@ -36,6 +38,7 @@ public class NoRole extends Person {
 	}
 
 	/**
+	 * Implement reply interface
 	 * @param buyerID for NoRole.
 	 * @param sellerID always false since NoRole can not reply to buyer.
 	 * @return
@@ -46,6 +49,7 @@ public class NoRole extends Person {
 	}
 
 	/**
+	 * Implement lookup interface
 	 * @param product for NoRole.
 	 * @param hopCount for NoRole.
 	 * @return always false since NoRole not actively lookup.
