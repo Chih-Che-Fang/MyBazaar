@@ -108,7 +108,7 @@ We write peer initial state (Ex. type, product, neighbors, etc...) to info-id an
 We use SCP to pull test output under the output folder from all remote servers. We store the output from each server to the local machine's output folder. Ex. If server1's IP address is 128.0.35.1, we store the output to output\128.0.35.1. Since all output is tagged with test name, we know which test and what is the machine the output belongs to. We used this information to validate if the distributed system act as we expect.
 
 ### Release AWS resource
-We terminate all EC2 instances and delete the security group created previously at the end of the test
+We terminate all EC2 instances and delete the security group and key pairs created previously at the end of the test
 
 # Validation & Test
 ## Test Cases
