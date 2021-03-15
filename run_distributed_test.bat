@@ -6,13 +6,16 @@ rmdir output /S /Q
 mkdir output
 del config.txt
 
-REM Create key pair, security group, and EC2 instances
-aws ec2 create-key-pair --key-name 677kp
+REM Create key pair, security group
+aws ec2 delete-key-pair --key-name 677kp32144321
+aws ec2 create-key-pair --key-name 677kp32144321 --query "KeyMaterial" --output text > 677kp32144321.pem
 aws ec2 create-security-group --group-name MyBazaar32144321 --description "SG for 677 lab1"
+
+REM Create EC2 instances
 aws ec2 authorize-security-group-ingress --group-name MyBazaar32144321 --protocol tcp --port 0-65535 --cidr 0.0.0.0/0
-aws ec2 run-instances --image-id ami-05d7c468e832704bc --instance-type t2.micro --key-name 677kp --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m1}]" > instance.json
-aws ec2 run-instances --image-id ami-05d7c468e832704bc --instance-type t2.micro --key-name 677kp --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m2}]" > instance.json
-aws ec2 run-instances --image-id ami-05d7c468e832704bc --instance-type t2.micro --key-name 677kp --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m3}]" > instance.json
+aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m1}]" > instance.json
+aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m2}]" > instance.json
+aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m3}]" > instance.json
 
 timeout 45
 
@@ -40,9 +43,9 @@ for /f "tokens=*" %%a in (ips.txt) do (
 
 REM Migrate latest code and complie code
 for /f "tokens=*" %%a in (ips.txt) do (
-	ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "rm -rf MyBazaar"
-	scp -o "StrictHostKeyChecking no" -i 677kp.pem -r %cd%  ec2-user@%%a:~/MyBazaar
-	ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "cd ~/MyBazaar;sh compile_linux.sh"
+	ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "rm -rf MyBazaar"
+	scp -o "StrictHostKeyChecking no" -i 677kp32144321.pem -r %cd%  ec2-user@%%a:~/MyBazaar
+	ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;sh compile_linux.sh"
 )
 
 
@@ -55,10 +58,10 @@ set /a count = 0
 REM Copy config and inital peer state to remote servers
 for /f "tokens=*" %%a in (ips.txt) do (
   if !count! == 2 (goto :BREAK1)
-  scp -o "StrictHostKeyChecking no" -i 677kp.pem config.txt ec2-user@%%a:~/MyBazaar
-  scp -o "StrictHostKeyChecking no" -i 677kp.pem info-id-0 ec2-user@%%a:~/MyBazaar
-  scp -o "StrictHostKeyChecking no" -i 677kp.pem info-id-1 ec2-user@%%a:~/MyBazaar
-  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
+  scp -o "StrictHostKeyChecking no" -i 677kp32144321.pem config.txt ec2-user@%%a:~/MyBazaar
+  scp -o "StrictHostKeyChecking no" -i 677kp32144321.pem info-id-0 ec2-user@%%a:~/MyBazaar
+  scp -o "StrictHostKeyChecking no" -i 677kp32144321.pem info-id-1 ec2-user@%%a:~/MyBazaar
+  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
   set /a count += 1
 )
 :BREAK1
@@ -68,7 +71,7 @@ REM Kill all peers
 set /a count = 0
 for /f "tokens=*" %%a in (ips.txt) do (
   if !count! == 2 (goto :BREAK11)
-  ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "killall java"
+  ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "killall java"
   set /a count += 1
 )
 :BREAK11
@@ -83,10 +86,10 @@ set /a count = 0
 REM Copy config and inital peer state to remote servers
 for /f "tokens=*" %%a in (ips.txt) do (
   if !count! == 2 (goto :BREAK2)
-  scp -i 677kp.pem config.txt ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-0 ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-1 ec2-user@%%a:~/MyBazaar
-  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
+  scp -i 677kp32144321.pem config.txt ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-0 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-1 ec2-user@%%a:~/MyBazaar
+  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
   set /a count += 1
 )
 :BREAK2
@@ -96,7 +99,7 @@ REM Kill all peers
 set /a count = 0
 for /f "tokens=*" %%a in (ips.txt) do (
   if !count! == 2 (goto :BREAK21)
-  ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "killall java"
+  ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "killall java"
   set /a count += 1
 )
 :BREAK21
@@ -111,10 +114,10 @@ set /a count = 0
 REM Copy config and inital peer state to remote servers
 for /f "tokens=*" %%a in (ips.txt) do (
   if !count! == 2 (goto :BREAK3)
-  scp -i 677kp.pem config.txt ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-0 ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-1 ec2-user@%%a:~/MyBazaar
-  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
+  scp -i 677kp32144321.pem config.txt ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-0 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-1 ec2-user@%%a:~/MyBazaar
+  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
   set /a count += 1
 )
 :BREAK3
@@ -124,7 +127,7 @@ REM Kill all peers
 set /a count = 0
 for /f "tokens=*" %%a in (ips.txt) do (
   if !count! == 2 (goto :BREAK31)
-  ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "killall java"
+  ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "killall java"
   set /a count += 1
 )
 :BREAK31
@@ -142,19 +145,19 @@ echo n 5 boars 1,2,3 1 test4> info-id-5
 set /a count = 0
 
 for /f "tokens=*" %%a in (ips.txt) do (
-  scp -i 677kp.pem config.txt ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-0 ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-1 ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-2 ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-3 ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-4 ec2-user@%%a:~/MyBazaar
-  scp -i 677kp.pem info-id-5 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem config.txt ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-0 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-1 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-2 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-3 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-4 ec2-user@%%a:~/MyBazaar
+  scp -i 677kp32144321.pem info-id-5 ec2-user@%%a:~/MyBazaar
   
   set /a id1=!count!
   set /a id2=!count! + 3
   
-  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !id1!"
-  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !id2!"
+  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !id1!"
+  start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !id2!"
   set /a count += 1
 )
 
@@ -162,9 +165,9 @@ TIMEOUT 12
 
 REM Kill all peers
 for /f "tokens=*" %%a in (ips.txt) do (
-  ssh -o "StrictHostKeyChecking no" -i 677kp.pem ec2-user@%%a "killall java"
+  ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "killall java"
   mkdir output\%%a
-  scp -i 677kp.pem -r ec2-user@%%a:~/MyBazaar/output/*.out output\%%a\
+  scp -i 677kp32144321.pem -r ec2-user@%%a:~/MyBazaar/output/*.out output\%%a\
 )
 
 REM release AWS resources
@@ -172,7 +175,8 @@ aws ec2 delete-security-group --group-name MyBazaar32144321
 for /f "tokens=*" %%a in (ids.txt) do (
   aws ec2 terminate-instances --instance-ids %%a
 )
-
+aws ec2 delete-key-pair --key-name 677kp32144321
+del 677kp3214432132144321.pem
 del instance.json
 del ids.txt
 del ips.txt
