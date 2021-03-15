@@ -61,6 +61,8 @@ for /f "tokens=*" %%a in (ips.txt) do (
   scp -o "StrictHostKeyChecking no" -i 677kp32144321.pem config.txt ec2-user@%%a:~/MyBazaar
   scp -o "StrictHostKeyChecking no" -i 677kp32144321.pem info-id-0 ec2-user@%%a:~/MyBazaar
   scp -o "StrictHostKeyChecking no" -i 677kp32144321.pem info-id-1 ec2-user@%%a:~/MyBazaar
+  
+  REM Deploy peer on remote server
   start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
   set /a count += 1
 )
@@ -89,6 +91,8 @@ for /f "tokens=*" %%a in (ips.txt) do (
   scp -i 677kp32144321.pem config.txt ec2-user@%%a:~/MyBazaar
   scp -i 677kp32144321.pem info-id-0 ec2-user@%%a:~/MyBazaar
   scp -i 677kp32144321.pem info-id-1 ec2-user@%%a:~/MyBazaar
+  
+  REM Deploy peer on remote server
   start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
   set /a count += 1
 )
@@ -117,6 +121,8 @@ for /f "tokens=*" %%a in (ips.txt) do (
   scp -i 677kp32144321.pem config.txt ec2-user@%%a:~/MyBazaar
   scp -i 677kp32144321.pem info-id-0 ec2-user@%%a:~/MyBazaar
   scp -i 677kp32144321.pem info-id-1 ec2-user@%%a:~/MyBazaar
+  
+  REM Deploy peer on remote server
   start cmd /k ssh -o "StrictHostKeyChecking no" -i 677kp32144321.pem ec2-user@%%a "cd ~/MyBazaar;java -cp "./bin:./libs/*" roles.Person !count!"
   set /a count += 1
 )
@@ -153,6 +159,7 @@ for /f "tokens=*" %%a in (ips.txt) do (
   scp -i 677kp32144321.pem info-id-4 ec2-user@%%a:~/MyBazaar
   scp -i 677kp32144321.pem info-id-5 ec2-user@%%a:~/MyBazaar
   
+  REM Deploy peer on remote server
   set /a id1=!count!
   set /a id2=!count! + 3
   
