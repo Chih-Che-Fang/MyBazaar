@@ -37,6 +37,8 @@ If a seller is found, then the seller sends back a response that traverses in th
 
 Notice that the seller will send a buy ack back to the buyer if the buyer successfully bought the product. We add buy ack to handle with a race condition that seller might reply to multiple buyers but only one buyer can buy the product, which means buy request from a buyer doesn't necessarily succeed each time. We must let the buyer know if they successfully bought the product or not.  
 
+![RPCReq diagram](./RPCReq.PNG "RPCReq")
+
 # How it Works
  ## Bootstraping & Communication
 We applied XML-RPC framework as a peer communication way. Each peer is at the same time an RPC server and RPC client. When a peering is created, it launches a listening RPC server to keep receive client requests from remote peers. Since each peer has global knowledge (Ex. Other peer's IP and port address, what neighbor it has, etc...) of the network topology, it can send a search request to discover neighbors and wait for their response. In contrast, if a peer receives a request from peers, it knows the IP/port address and can respond to the peer. 
