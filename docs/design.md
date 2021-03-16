@@ -49,7 +49,7 @@ The server maps its message handler to a class. In our system, it maps its messa
 
 ## RPC Message Format
 We used our customized RPC message as follows:  
-Format = [Action arg1 (arg2) msgPath sentTo]  
+Format = **[Action arg1 (arg2) msgPath sentTo]**  
 
 **Action:** Indicate whether it is a buy/sell/lookup request  
 **arg1, arg2:** Argument of the request  
@@ -61,7 +61,7 @@ Here is one example of RPC message that seller ID 1 sent a reply message back to
 
 ## Global IP/Port Address Configuration
 To allow peers to communicate with each other, we need to give them other peer's addresses and port, we use a file - config.txt to record the information.
-Format = [PeerID, IPAddress:Port]  
+Format = **[PeerID, IPAddress:Port]**  
 
 **PeerID:** ID of the peer  
 **IPAddress:Port:** The peer's ipv4 address and listening port  
@@ -80,7 +80,7 @@ When a RPC server receives a new client request, its message handler will launch
 
 ## Peer Shared Information Format
 We store the shared peer information and named it as info-id with the format:  
-Format = [type peerID Product NeighborID Count TestName]
+Format = **[type peerID Product NeighborID Count TestName]**
 
 **type:** Indicate whether the peer is a buyer, seller, or no-role. When the value is "na", the system randomly assigns a type to this peer.  
 **peerID:** The peer's ID  
