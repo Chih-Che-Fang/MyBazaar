@@ -226,7 +226,7 @@ Results show averaged response times are almost the same (only a slight increase
 
 
 # Design Tradeoffs
-**RPC/RMI Call V.S RPC Call**  
+**RPC/RMI Call V.S Socket**  
 We must choose one of the ways for communication among peers. The pros of RPC/RMI is:    
 1. Allow user to define communicate interface, more human-readable and concise  
 2. Don't need to worry about low-level networking communication implementation  
