@@ -276,7 +276,7 @@ public class Person implements LookUp, Reply, Buy {
 		p.logStatus();
 		p.dump();
 		
-		//Buyer continue sending lookup msg
+		//Buyer continue sending lookup msg to neighbors
 		if(p.type.equals("b")){
 			
 			while(true) {
