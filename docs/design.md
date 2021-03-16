@@ -33,10 +33,12 @@ If a seller is found, then the seller sends back a response that traverses in th
 **Sell:** Interface that defines how a seller responds to a buyer if the seller has the product the buyer likes.  
 
 ## Sequence Diagram
+**Peer Interaction Workflow**  
 ![WorkFlow diagram](./WorkFlow.PNG "WorkFlow")
 
 Notice that the seller will send a buy ack back to the buyer if the buyer successfully bought the product. We add buy ack to handle with a race condition that seller might reply to multiple buyers but only one buyer can buy the product, which means buy request from a buyer doesn't necessarily succeed each time. We must let the buyer know if they successfully bought the product or not.  
 
+**RPC Request Handling Workflow**  
 ![RPCReq diagram](./RPCReq.PNG "RPCReq")
 
 # How it Works
@@ -47,7 +49,7 @@ The server maps its message handler to a class. In our system, it maps its messa
 
 ## RPC Message Format
 We used our customized RPC message as follows:  
-Format = [Action arg1 (arg2) msgPath sentTo]  
+Format = **[Action arg1 (arg2) msgPath sentTo]**  
 
 **Action:** Indicate whether it is a buy/sell/lookup request  
 **arg1, arg2:** Argument of the request  
@@ -59,7 +61,7 @@ Here is one example of RPC message that seller ID 1 sent a reply message back to
 
 ## Global IP/Port Address Configuration
 To allow peers to communicate with each other, we need to give them other peer's addresses and port, we use a file - config.txt to record the information.
-Format = [PeerID, IPAddress:Port]  
+Format = **[PeerID, IPAddress:Port]**  
 
 **PeerID:** ID of the peer  
 **IPAddress:Port:** The peer's ipv4 address and listening port  
@@ -78,7 +80,7 @@ When a RPC server receives a new client request, its message handler will launch
 
 ## Peer Shared Information Format
 We store the shared peer information and named it as info-id with the format:  
-Format = [type peerID Product NeighborID Count TestName]
+Format = **[type peerID Product NeighborID Count TestName]**
 
 **type:** Indicate whether the peer is a buyer, seller, or no-role. When the value is "na", the system randomly assigns a type to this peer.  
 **peerID:** The peer's ID  
@@ -224,7 +226,7 @@ Results show averaged response times are almost the same (only a slight increase
 
 
 # Design Tradeoffs
-**RPC/RMI Call V.S RPC Call**  
+**RPC/RMI Call V.S Socket**  
 We must choose one of the ways for communication among peers. The pros of RPC/RMI is:    
 1. Allow user to define communicate interface, more human-readable and concise  
 2. Don't need to worry about low-level networking communication implementation  
