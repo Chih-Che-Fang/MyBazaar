@@ -130,7 +130,7 @@ public class Person implements LookUp, Reply, Buy {
 			logger.log(String.format("SellerID:%s replied buyerID:%s", this.id, buyerID));
 		}
 		
-		//Peer dosen't have the product the buyer want, simply relay message to neighbors
+		//Peer is not a seller or it dosen't have the product the buyer want, simply relay message to neighbors
 		if(maxHop > 0) {
 			for(String cId : clients.keySet()) {
 				if(cId.compareTo(senderId) == 0) continue;

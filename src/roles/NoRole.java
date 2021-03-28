@@ -20,7 +20,7 @@ public class NoRole extends Person {
 
 
 	/**
-	 * logStatus to printout information
+	 * log status to testing output file  
 	 */
 	@Override
 	public void logStatus() {
@@ -28,7 +28,7 @@ public class NoRole extends Person {
 	}
 
 	/**
-	 * Implement buy interface
+	 * Implement buy interface for the no-role peer
 	 * @param sellerID for NoRole.
 	 * @return always false since NoRole can not buy.
 	 */
@@ -38,7 +38,7 @@ public class NoRole extends Person {
 	}
 
 	/**
-	 * Implement reply interface
+	 * Implement reply interface for the no-role peer
 	 * @param buyerID for NoRole.
 	 * @param sellerID always false since NoRole can not reply to buyer.
 	 * @return
@@ -49,7 +49,7 @@ public class NoRole extends Person {
 	}
 
 	/**
-	 * Implement lookup interface
+	 * Implement lookup interface for the no-role peer
 	 * @param product for NoRole.
 	 * @param hopCount for NoRole.
 	 * @return always false since NoRole not actively lookup.

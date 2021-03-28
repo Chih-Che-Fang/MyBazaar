@@ -14,7 +14,7 @@ import evaluation.SystemMonitor;
 
 
 /**
- * XmlRPCClient Class for init and making rpc call.
+ * XmlRPCClient Class for init and making RPC call.
  */
   public class Client {
 	  /** XmlRpcClient variable **/
@@ -50,6 +50,7 @@ import evaluation.SystemMonitor;
 	  }
 
 	/**
+	 * Execute a RPC request
 	 * @param method rpc method for xmlrpc client invoke.
 	 * @param params parameters for xmlrpc client invoke.
 	 * @return xmlrpc client call return value.
