@@ -241,6 +241,7 @@ We finally choose to use RPC as our peer communication since we want to hide the
 The pros of using Synchronous RPC is:
 1. Don't need to worry about concurrency issues caused by multi-thread  
 2. Lower complexity of system design. 
+
 The cons of Synchronous RPC is:  
 1. Impaired performance (throughput) if multiple requests happen concurrently.  
 2. Higher latency 
@@ -250,16 +251,18 @@ We finally chose Asyncrounous RPC Call since we want better performance(throughp
 **Thread Pool V.S Dynamically Creating New Thread**  
 To handle client RPC requests, we can choose either to launch a new thread every time or use the existing thread pool to allocate thread to message processing task. The pros of Thread Pool is:  
 1.Shorter response time of client request since we don't need to create new thread dynamically  
+
 The cons are:  
-1. Higher complexity of system since we need to handle the creation and recycle of threads  
+1. Higher complexity of system since we need to handle the creation and recycle of threads   
 2. Higher memory usage since we must maintain a certain amount of thread  
-3. Hard to debug  
+3. Hard to debug   
 
 We finally choose Dynamically Creating New Thread since the message handler thread doesn't have too many data attributes and creating is fast. Given that performance doesn't have too much difference and we want to simplify our design, we can dynamically creating a new thread to handle RPC client requests.
 
 **Dynamic Creation of EC2 Instances V.S Hot Stand-By EC2 Instances**  
 When launching multiple servers for peer deployment, we must choose between whether to dynamically creating new instances or deploy peers on hot standby servers. The pros of dynamic creation of EC2 Instances are:  
 1. Lower cost of AWS EC2 instance (EC2 bills by running time of instances)  
+
 The cons of a hot stand-by EC2 instance is:  
 1. Longer deployment time since we need to wait for instances to be created  
 2. Need to re-migrate and compile code every time we update our code  
@@ -271,10 +274,11 @@ We finally chose Dynamic Creation of EC2 Instances since the cost is significant
 To allow RPC access permission between different servers so that peers can communicate with each other. We attached the Amazon security group to each Amazon EC2 instance to implement this permission control. The pros of opening all TCP Port between Different Remote Serve is:  
 1. Don't need to worry about port range change (Ex. Add/Deletion) as we may want to add a new port to a peer  
 2. Easy to configure  
+
 The cons are:  
 1.  Impaired security since if one of the servers is malicious, it can exploit and attack the opened port  
 
-We finally chose to open only a certain range of TCP ports between Different Remote Server. We use a script to automatically create a security group to save the effort of changing the port in the future.
+We finally chose to open only a certain range of TCP ports between Different Remote Server. We use a script to automatically create a security group to save the effort of changing the port in the future.  
 
 
 # How to Run It
