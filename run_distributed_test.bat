@@ -9,14 +9,14 @@ del config.txt
 REM Create key pair, security group
 aws ec2 delete-key-pair --key-name 677kp32144321
 aws ec2 create-key-pair --key-name 677kp32144321 --query "KeyMaterial" --output text > 677kp32144321.pem
-aws ec2 delete-security-group --group-name MyBookStore32144321
+aws ec2 delete-security-group --group-name MyBazaar32144321
 aws ec2 create-security-group --group-name MyBazaar32144321 --description "SG for 677 lab1"
 
 REM Create EC2 instances
 aws ec2 authorize-security-group-ingress --group-name MyBazaar32144321 --protocol tcp --port 0-65535 --cidr 0.0.0.0/0
-aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --security-groups MyBookStore32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m1}]" > instance.json
-aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --security-groups MyBookStore32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m2}]" > instance.json
-aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --security-groups MyBookStore32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m3}]" > instance.json
+aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --security-groups MyBazaar32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m1}]" > instance.json
+aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --security-groups MyBazaar32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m2}]" > instance.json
+aws ec2 run-instances --image-id ami-023ba056901e16c76 --instance-type t2.micro --key-name 677kp32144321 --security-groups MyBazaar32144321 --tag-specifications "ResourceType=instance,Tags=[{Key=MyBazaar32144321,Value=m3}]" > instance.json
 
 timeout 45
 
