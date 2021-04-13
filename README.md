@@ -1,7 +1,5 @@
 # MyBazaar
 
-*I Aggree to share this source code with my group members
-
 **Enviornment:**  Windows + Java SDK 8 Installed  + AWS Cli2.0 installed + AWS cli configured with your own AWS account **(Please make sure you're able to access your AWS account by AWS CLI)**  
 **Applications:**   
 **[Milestone1]**  
