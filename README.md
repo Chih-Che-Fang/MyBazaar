@@ -1,8 +1,4 @@
 # MyBazaar
-# Group Members: 
-# Name: Chih-Che Fang, SPIRE ID: 32144321, Email: chihchefang@umass.ed;
-# Name: Shivam Srivastava, SPIRE ID: 31668793, Email: shivamsrivas@umass.edu; 
-# Name: Shiyang Wang, SPIRE ID: 32542622, Email: shiyangwang@umass.edu;
 
 *I Aggree to share this source code with my group members
 
